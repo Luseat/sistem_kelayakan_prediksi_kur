@@ -1,0 +1,11 @@
+
+env/
+venv/
+
+# Mengabaikan cache
+__pycache__/
+*.pyc
+
+# Mengabaikan file sistem MacOS/Windows
+.DS_Store
+Thumbs.db
