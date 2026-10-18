@@ -76,9 +76,6 @@ if st.button("Mulai Prediksi Kelayakan"):
         st.subheader("Hasil Evaluasi Sistem:")
         
         
-        # cicilan_per_bulan = jumlah_pinjaman / tenor_pinjaman
-        # batas_aman_cicilan = 0.40 * omset # Asumsi bank: cicilan maksimal 40% dari omset bulanan
-        
         if cicilan_per_bulan > batas_aman_cicilan:
             st.error("❌ **TIDAK LAYAK (REJECTED BY SYSTEM RULE)**")
             st.write(f"Sistem menolak otomatis. Rasio cicilan (**{rasio_cicilan:.1f}%**)melebihi batas toleransi risiko kredit perbankan (**maksimal 40% dari omset**).")
