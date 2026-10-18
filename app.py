@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import time
 
 st.title("Aplikasi Prediksi Kelayakan Kredit Usaha Rakyat (KUR)")
 st.write("Sistem ini memprediksi gagal bayar calon debitur KUR berdasarkan input data yang diberikan.")
@@ -34,6 +35,8 @@ if st.button("Mulai Prediksi Kelayakan"):
     if None in [usia, jumlah_anak, omset, jumlah_pinjaman, tenor_pinjaman]:
         st.warning("⚠️ Mohon ketik dan lengkapi semua data angka di atas sebelum memprediksi.")
     else:
+        with st.spinner("🔄 Sedang memproses data & mengevaluasi kelayakan risiko kredit"):
+            time.sleep(3.5)
         
         
         st.markdown("----")
