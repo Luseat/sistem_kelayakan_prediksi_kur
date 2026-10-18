@@ -34,6 +34,18 @@ if st.button("Mulai Prediksi Kelayakan"):
     if None in [usia, jumlah_anak, omset, jumlah_pinjaman, tenor_pinjaman]:
         st.warning("⚠️ Mohon ketik dan lengkapi semua data angka di atas sebelum memprediksi.")
     else:
+        
+        
+        st.markdown("----")
+        cicilan_per_bulan = jumlah_pinjaman / tenor_pinjaman
+        rasio_cicilan = (cicilan_per_bulan / omset) * 100
+        batas_aman_cicilan = 0.40 * omset # Maksimal 40% dari omset
+        sisa_omset = omset - cicilan_per_bulan
+        
+        
+        st.subheader("📊 Ringkasan Kapasitas Finansial")
+        m1, m2, m3 = st.columns(3)      
+        
         st.markdown("----")
         st.subheader("Hasil Evaluasi Sistem:")
         
