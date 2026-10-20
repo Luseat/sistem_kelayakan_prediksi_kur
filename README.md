@@ -30,7 +30,7 @@ Sistem mengadopsi arsitektur evaluasi dua lapis (*Dual-Layer Decision Model*) ya
                                     │
                                     ▼
        ┌────────────────────────────────────────────────────────┐
-       │   📊 Kartu Ringkasan Kapasitas Finansial (st.metric)   │
+       │   📊 Kartu Ringkasan Kapasitas Finansial               │
        │    - Estimasi Angsuran / Bulan (Rp)                    │
        │    - Debt Service Ratio / DSR (% vs batas aman 40%)    │
        │    - Sisa Omset Bersih (Status Surplus / Defisit)      │
