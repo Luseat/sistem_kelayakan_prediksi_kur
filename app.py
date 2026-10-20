@@ -35,7 +35,7 @@ if st.button("Mulai Prediksi Kelayakan"):
     if None in [usia, jumlah_anak, omset, jumlah_pinjaman, tenor_pinjaman]:
         st.warning("⚠️ Mohon ketik dan lengkapi semua data angka di atas sebelum memprediksi.")
     else:
-        with st.spinner("🔄 Sedang memproses data & mengevaluasi kelayakan risiko kredit"):
+        with st.spinner(" Sedang memproses data & mengevaluasi kelayakan risiko kredit..."):
             time.sleep(3.5)
         
         
