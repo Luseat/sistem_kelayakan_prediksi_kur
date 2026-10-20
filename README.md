@@ -24,7 +24,7 @@ Sistem mengadopsi arsitektur evaluasi dua lapis (*Dual-Layer Decision Model*) ya
                                     │
                                     ▼
        ┌────────────────────────────────────────────────────────┐
-       │   Simulasi Pemrosesan & Visual Feedback (st.spinner)   │
+       │   Simulasi Pemrosesan & Visual Feedback                │
        │    Analisis profil risiko nasabah secara real-time     │
        └────────────────────────────┬───────────────────────────┘
                                     │
