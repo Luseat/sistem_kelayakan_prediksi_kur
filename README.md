@@ -1,26 +1,40 @@
 # 🏦 Sistem Prediksi Kelayakan Kredit Usaha Rakyat (KUR) UMKM
 
-Aplikasi berbasis web untuk memprediksi kelayakan dan risiko gagal bayar calon debitur Kredit Usaha Rakyat (KUR) di sektor UMKM. Sistem ini menggabungkan pendekatan **Hybrid Evaluation**: *Financial Hard Business Rule* (penilaian rasio kapasitas bayar) dan *Machine Learning Ensemble* (**Random Forest** + **Bagging Classifier** dengan teknik **Voting Classifier** & **SMOTE**).
+Aplikasi berbasis web untuk memprediksi kelayakan dan risiko gagal bayar calon debitur Kredit Usaha Rakyat (KUR) di sektor UMKM. Sistem ini mengadopsi pendekatan **Hybrid Evaluation Architecture**: memadukan *Financial Hard Business Rule* (analisis rasio kapasitas angsuran perbankan) dan *Machine Learning Ensemble* (**Random Forest** + **Bagging Classifier** dengan teknik **Voting Classifier** & **SMOTE**).
 
 ---
 
 ## 📌 Latar Belakang & Masalah
 
 Pemberian fasilitas kredit bagi pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) memegang peranan krusial dalam pertumbuhan ekonomi daerah. Namun, proses evaluasi kelayakan kredit yang dilakukan secara manual sering kali menghadapi kendala:
-- **Subjektivitas & Human Error**: Penilaian analis kredit berisiko inkonsisten antar-staf.
-- **Efisiensi Waktu**: Waktu verifikasi dan analisis berkas membutuhkan proses panjang.
+- **Subjektivitas & Human Error**: Penilaian analis kredit berisiko inkonsisten antar-staf verifikator.
+- **Efisiensi Waktu**: Proses analisis kelayakan berkas fisik memakan waktu yang cukup lama.
 - **Risiko Kredit Macet (NPL)**: Potensi kerugian finansial akibat salah meloloskan calon debitur berisiko gagal bayar tinggi (*False Positive*).
 
-Sistem ini dikembangkan sebagai solusi otomatisasi analisis kredit yang objektif, cepat, dan presisi tinggi dengan pendekatan dua lapis evaluasi.
+Sistem ini dikembangkan sebagai solusi otomatisasi analisis kredit yang objektif, transparan, cepat, dan presisi tinggi guna meminimalisir risiko kredit macet.
 
 ---
 
-## 🚀 Fitur Utama & Cara Kerja Sistem (Dual-Layer Evaluation)
+## 🚀 Fitur Utama & Cara Kerja Sistem (Hybrid Architecture)
 
-Sistem mengadopsi arsitektur evaluasi dua lapis (*Hybrid Decision Model*):
+Sistem mengadopsi arsitektur evaluasi dua lapis (*Dual-Layer Decision Model*) yang dilengkapi dengan umpan balik visual komprehensif:
 
 ```
                        [ Input Data Calon Debitur ]
+                                    │
+                                    ▼
+       ┌────────────────────────────────────────────────────────┐
+       │   Simulasi Pemrosesan & Visual Feedback (st.spinner)   │
+       │    Analisis profil risiko nasabah secara real-time     │
+       └────────────────────────────┬───────────────────────────┘
+                                    │
+                                    ▼
+       ┌────────────────────────────────────────────────────────┐
+       │   📊 Kartu Ringkasan Kapasitas Finansial (st.metric)   │
+       │    - Estimasi Angsuran / Bulan (Rp)                    │
+       │    - Debt Service Ratio / DSR (% vs batas aman 40%)    │
+       │    - Sisa Omset Bersih (Status Surplus / Defisit)      │
+       └────────────────────────────┬───────────────────────────┘
                                     │
                                     ▼
        ┌────────────────────────────────────────────────────────┐
@@ -46,34 +60,46 @@ Sistem mengadopsi arsitektur evaluasi dua lapis (*Hybrid Decision Model*):
                         (Risiko Rendah / Layak)          (Pola Risiko Macet Tinggi)
 ```
 
-1. **Lapis 1 - Financial Hard Rule (Akal Sehat Perbankan)**:
-   - Menghitung rasio cicilan bulanan terhadap omset calon debitur.
-   - Jika rasio cicilan melebihi **40% dari total omset per bulan**, pengajuan otomatis **ditolak (Rejected by System Rule)** tanpa membebani model AI.
-2. **Lapis 2 - Machine Learning Ensemble Pipeline**:
-   - Jika lolos uji finansial lapis 1, data diproses ke pipeline machine learning yang sudah dilatih.
-   - Menggunakan kombinasi **Tuned Random Forest** dan **Tuned Bagging Classifier** melalui mekanisme **Hard Voting**.
-   - Penanganan ketimpangan kelas (*imbalanced dataset*) ditangani menggunakan **SMOTE (Synthetic Minority Over-sampling Technique)** pada saat training untuk meningkatkan daya tangkap (*Recall*) terhadap debitur gagal bayar.
-3. **Antarmuka Interaktif (Streamlit)**:
-   - Form input ramah pengguna (*User Friendly*) dengan *placeholder* dan validasi nilai kosong (*None validation*).
+### 1. 📊 Kartu Ringkasan Kapasitas Finansial (Financial Metrics Cards)
+Sebelum hasil keputusan ditampilkan, sistem menyajikan 3 metrik kesehatan finansial calon debitur menggunakan widget `st.metric`:
+- **Estimasi Cicilan per Bulan**: Nominal cicilan tetap yang dihitung dari `jumlah_pinjaman / tenor_pinjaman`.
+- **Rasio Beban Cicilan (Debt Service Ratio / DSR)**: Persentase beban cicilan terhadap omset bulanan, dilengkapi indikator warna dinamis (berwarna hijau jika dalam batas aman $\le 40\%$, dan otomatis merah jika melampaui batas aman $> 40\%$).
+- **Sisa Omset Bersih (Disposable Income)**: Estimasi dana tersisa setelah dipotong angsuran, lengkap dengan penanda status **Surplus** atau **Defisit**.
+
+### 2. 🔄 Animasi Pemrosesan Interaktif (Smart Loading Spinner)
+Sistem dilengkapi animasi pemrosesan (`st.spinner`) dan jeda cerdas (*processing delay*) saat tombol evaluasi ditekan. Hal ini memberikan transparansi serta pengalaman pengguna (UX) yang realistis bahwa sistem sedang menjalankan komputasi analisis risiko mendalam.
+
+### 3. 🛡️ Lapis 1 - Financial Hard Rule (Akal Sehat Finansial)
+- Menguji kelayakan rasio kapasitas bayar calon debitur.
+- Jika cicilan per bulan melebihi **40% dari total omset bulanan**, pengajuan akan **ditolak secara otomatis oleh sistem (Rejected by System Rule)** demi mencegah *over-indebtedness* (gali lubang tutup lubang) tanpa membebani model AI.
+
+### 4. 🤖 Lapis 2 - Machine Learning Ensemble Pipeline
+- Jika calon debitur lolos evaluasi finansial Lapis 1, data dialirkan ke pipeline Machine Learning.
+- Model memadukan **Tuned Random Forest Classifier** dan **Tuned Bagging Classifier** melalui mekanisme konsensus **Hard Voting**.
+- Ketimpangan kelas (*class imbalance*) ditangani menggunakan teknik **SMOTE (Synthetic Minority Over-sampling Technique)** pada saat pelatihan agar sistem memiliki sensitivitas tinggi (*Recall*) dalam mendeteksi potensi debitur bermasalah.
+
+### 5. ✍️ Validasi Input Form Dinamis
+- Input angka dirancang tanpa nilai bawaan (*value=None*) disertai *placeholder* informatif, mengharuskan pengguna mengisi data secara manual.
+- Dilengkapi sistem penahan (*input validation guardrail*) untuk mencegah kesalahan sistem jika ada parameter yang belum diisi.
 
 ---
 
 ## 📊 Atribut Data Input
 
-| Parameter | Tipe Data | Deskripsi |
-| :--- | :--- | :--- |
-| `usia` | Numerik | Usia calon debitur (18 - 100 tahun) |
-| `jenis_kelamin` | Kategorikal | Laki-laki / Perempuan |
-| `status` | Kategorikal | Status pekerjaan (Wirausaha / Karyawan) |
-| `jumlah_anak` | Numerik | Jumlah tanggungan keluarga |
-| `omset` | Numerik | Estimasi pendapatan / omset bersih per bulan (Rp) |
-| `jumlah_pinjaman` | Numerik | Nominal pinjaman yang diajukan (Rp) |
-| `tenor_pinjaman_(bulan)` | Numerik | Jangka waktu pengembalian pinjaman (Bulan) |
-| `riwayat_telat_bayar` | Biner | Rekam jejak kredit sebelumnya (`0` = Tidak Pernah, `1` = Pernah) |
+| Parameter | Tipe Data | Format Input | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| `usia` | Numerik | 18 - 100 Tahun | Usia calon debitur |
+| `jenis_kelamin` | Kategorikal | Laki-laki / Perempuan | Jenis kelamin nasabah |
+| `status` | Kategorikal | Wirausaha / Karyawan | Kategori pekerjaan debitur |
+| `jumlah_anak` | Numerik | 0 - 20 Anak | Jumlah anak / tanggungan keluarga |
+| `omset` | Numerik | Rupiah (Rp) | Estimasi omset/pendapatan bersih per bulan |
+| `jumlah_pinjaman` | Numerik | Rupiah (Rp) | Plafon pinjaman yang diajukan |
+| `tenor_pinjaman_(bulan)` | Numerik | 1 - 240 Bulan | Jangka waktu pengembalian kredit |
+| `riwayat_telat_bayar` | Biner | Tidak Pernah (0) / Pernah (1) | Rekam jejak kolektibilitas angsuran sebelumnya |
 
-**Target Prediksi:**
-- `0`: **Approved** (Risiko gagal bayar rendah / Layak diberikan)
-- `1`: **Rejected** (Risiko gagal bayar tinggi / Tidak disarankan)
+**Label Hasil Keputusan:**
+- `0`: **Approved** (Risiko gagal bayar rendah / Layak diberikan fasilitas kredit)
+- `1`: **Rejected** (Risiko gagal bayar tinggi / Ditolak oleh AI atau System Rule)
 
 ---
 
@@ -82,15 +108,15 @@ Sistem mengadopsi arsitektur evaluasi dua lapis (*Hybrid Decision Model*):
 ```text
 kredit_usaha_rakyat/
 │
-├── .gitignore                                 # Mengabaikan file env, venv, cache pyc
-├── app.py                                     # Aplikasi UI Streamlit & integrasi model
-├── pembuatan_model_random_forest_&_bagging.ipynb  # Eksplorasi data, preprocessing, & training model
-├── README.md                                  # Dokumentasi proyek
+├── .gitignore                                     # Mengabaikan folder env, venv, cache pyc
+├── app.py                                         # Aplikasi web Streamlit (UI, Hard Rule, & Integrasi AI)
+├── pembuatan_model_random_forest_&_bagging.ipynb  # Notebook eksplorasi data, SMOTE, GridSearchCV, & ekspor model
+├── README.md                                      # Dokumentasi teknis proyek
 │
 ├── model/
-│   └── model_kredit_usaha_rakyat.pkl          # Pipeline model ter-serialisasi (Scikit-Learn & ImbPipeline)
+│   └── model_kredit_usaha_rakyat.pkl              # Pipeline model ter-serialisasi (Scikit-Learn & ImbPipeline)
 │
-└── env/                                       # Virtual environment Python (lokal)
+└── env/                                           # Virtual environment lokal (Python)
 ```
 
 ---
@@ -104,7 +130,7 @@ cd sistem_kelayakan_prediksi_kur
 ```
 
 ### 2. Siapkan Virtual Environment
-Gunakan Python 3.10+ (disarankan mengisolasi pustaka via venv):
+Gunakan Python 3.10+ (disarankan mengisolasi pustaka via virtual environment):
 ```bash
 # Windows
 python -m venv env
@@ -124,24 +150,24 @@ pip install streamlit pandas scikit-learn imbalanced-learn joblib numpy
 ```bash
 streamlit run app.py
 ```
-Aplikasi akan otomatis terbuka pada peramban web di alamat `http://localhost:8501`.
+Aplikasi akan langsung terbuka di browser lokal pada alamat `http://localhost:8501`.
 
 ---
 
 ## 📈 Metodologi Pembelajaran Mesin
 
-1. **Preprocessing Data**:
-   - `StandardScaler` untuk normalisasi skala fitur numerik (`usia`, `omset`, `jumlah_pinjaman`, `tenor`, `jumlah_anak`).
-   - `OneHotEncoder` untuk representasi fitur kategorikal (`jenis_kelamin`, `status`).
-2. **Resampling Data**:
-   - `SMOTE` diintegrasikan dalam `imblearn.pipeline.Pipeline` untuk mencegah kebocoran data (*data leakage*) selama validasi silang (*cross-validation*).
-3. **Model Ensembling**:
-   - Model utama: **VotingClassifier (Hard Voting)** yang menggabungkan estimator terbaik hasil *Hyperparameter Tuning* (GridSearchCV) dari:
-     - `RandomForestClassifier`
-     - `BaggingClassifier`
+1. **Preprocessing Data Pipeline**:
+   - `StandardScaler`: Normalisasi fitur skala numerik (`usia`, `omset`, `jumlah_pinjaman`, `tenor_pinjaman_(bulan)`, `jumlah_anak`).
+   - `OneHotEncoder`: Transformasi variabel kategorikal (`jenis_kelamin`, `status`) ke representasi numerik biner.
+2. **Resampling Data (Handling Imbalanced Class)**:
+   - `SMOTE` diintegrasikan langsung ke dalam `imblearn.pipeline.Pipeline` untuk mencegah kebocoran data (*data leakage*) selama validasi silang (*cross-validation*).
+3. **Ensemble Modeling & Hyperparameter Tuning**:
+   - Algoritma Dasar: **Random Forest** & **Bagging Classifier**.
+   - Optimasi Parameter: Menggunakan `GridSearchCV` untuk mencari kombinasi parameter terbaik.
+   - Penentuan Keputusan Akhir: **VotingClassifier (Hard Voting)** yang menggabungkan kedua estimator ter-tuning untuk menghasilkan prediksi yang lebih stabil, objektif, dan minim variansi.
 
 ---
 
 ## 👨‍💻 Kontributor & Lisensi
-Proyek ini dikembangkan untuk keperluan penelitian dan implementasi sistem pendukung keputusan penyaluran kredit UMKM.
+Proyek ini dikembangkan untuk keperluan penelitian skripsi dan implementasi sistem pendukung keputusan penyaluran kredit UMKM.
 Lisensi: Open-Source untuk tujuan edukasi dan riset.
