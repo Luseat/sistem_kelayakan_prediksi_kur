@@ -79,6 +79,21 @@ if st.button("Mulai Prediksi Kelayakan"):
         if cicilan_per_bulan > batas_aman_cicilan:
             st.error("❌ **TIDAK LAYAK (REJECTED BY SYSTEM RULE)**")
             st.write(f"Sistem menolak otomatis. Rasio cicilan (**{rasio_cicilan:.1f}%**)melebihi batas toleransi risiko kredit perbankan (**maksimal 40% dari omset**).")
+            
+            
+            import math 
+            tenor_rekomendasi = math.ceil(jumlah_pinjaman / batas_aman_cicilan)
+            pinjaman_maks_rekomendasi = batas_aman_cicilan * tenor_pinjaman
+            st.info("**Rekomendasi Solusi dari Sistem (Simulasi Restrukturisasi)**")
+            
+            
+            if tenor_rekomendasi <= 240:
+                cicilan_baru = jumlah_pinjaman / tenor_rekomendasi
+                rasio_baru = (cicilan_baru / omset) * 180
+                st.markdown(""" Agar pengajuan ini memenuhi kriteria rasio aman perbankan (DSR $\le$ 40%), analis dapat menawarkan alternatif berikut:
+                            - **Opsi 1 (Perpanjang Tenor): ** Naikan tenor dari **{int(tenor_pinjaman)} bulan** menjadi minimal **{tenor_rekomendasi} bulan**""")
+            
+            
         else:
             # Mapping inputan UI ke format yang dimengerti model
             input_data = pd.DataFrame({
