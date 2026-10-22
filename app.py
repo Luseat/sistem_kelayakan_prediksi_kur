@@ -91,7 +91,10 @@ if st.button("Mulai Prediksi Kelayakan"):
                 cicilan_baru = jumlah_pinjaman / tenor_rekomendasi
                 rasio_baru = (cicilan_baru / omset) * 180
                 st.markdown(""" Agar pengajuan ini memenuhi kriteria rasio aman perbankan (DSR $\le$ 40%), analis dapat menawarkan alternatif berikut:
-                            - **Opsi 1 (Perpanjang Tenor): ** Naikan tenor dari **{int(tenor_pinjaman)} bulan** menjadi minimal **{tenor_rekomendasi} bulan**""")
+                            - **Opsi 1 (Perpanjang Tenor): ** Naikan tenor dari **{int(tenor_pinjaman)} bulan** menjadi minimal **{tenor_rekomendasi} bulan**.
+                            (Estimasi cicilan baru menjadi **Rp {int(cicilan_baru):,}** /bulan dengan rasio beban) ** {rasio_baru:.1f}%**)*.
+                            - **Opsi 2 (Sesuaikan platform):** Jika nasabah ingin tetap tenor **{int(tenor_pinjaman)} bulan**, nominal pinjaman maksimal yang disarankan adalah **Rp {int(pinjaman_maks_rekomendasi):,}**.
+                            """.replace(",", "."))
             
             
         else:
