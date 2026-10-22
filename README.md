@@ -4,7 +4,7 @@ Aplikasi berbasis web untuk memprediksi kelayakan dan risiko gagal bayar calon d
 
 ---
 
-## 📌 Latar Belakang & Masalah
+##  Latar Belakang & Masalah
 
 Pemberian fasilitas kredit bagi pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) memegang peranan krusial dalam pertumbuhan ekonomi daerah. Namun, proses evaluasi kelayakan kredit yang dilakukan secara manual sering kali menghadapi kendala:
 - **Subjektivitas & Human Error**: Penilaian analis kredit berisiko inkonsisten antar-staf verifikator.
@@ -16,7 +16,7 @@ Sistem ini dikembangkan sebagai solusi otomatisasi analisis kredit yang objektif
 
 ---
 
-## 🚀 Fitur Utama & Cara Kerja Sistem (Hybrid Architecture)
+##  Fitur Utama & Cara Kerja Sistem (Hybrid Architecture)
 
 Sistem mengadopsi arsitektur evaluasi dua lapis (*Dual-Layer Decision Model*) yang terintegrasi dengan modul analitik dan simulasi bisnis:
 
@@ -51,7 +51,7 @@ Sistem mengadopsi arsitektur evaluasi dua lapis (*Dual-Layer Decision Model*) ya
         (Kapasitas Finansial Kurang)   │ Lapis 2: Machine Learning   │
                     │                  │    Pipeline (Scikit-Learn)  │
                     ▼                  │  - Scaling & One-Hot Encode │
-       💡 What-If Recommendation Engine│  - Voting Classifier        │
+          What-If Recommendation Engine│  - Voting Classifier        │
         - Opsi 1: Perpanjangan Tenor   │    (Random Forest + Bagging)│
         - Opsi 2: Penyesuaian Plafon   └──────────────┬──────────────┘
                                                       │
@@ -89,11 +89,11 @@ Ketika pengajuan ditolak pada Lapis 1 karena rasio cicilan melampaui batas toler
 - Ketimpangan kelas (*class imbalance*) ditangani menggunakan teknik **SMOTE (Synthetic Minority Over-sampling Technique)** pada saat pelatihan agar sistem memiliki sensitivitas tinggi (*Recall*) dalam mendeteksi potensi debitur bermasalah.
 - **Saran Mitigasi Risiko**: Jika nasabah lolos rasio finansial namun ditolak oleh AI, sistem memberikan panduan audit lapangan (verifikasi tempat usaha, cek mutasi rekening 3 bulan terakhir, dan pertimbangan agunan tambahan).
 
-### 5. 🔄 Animasi Pemrosesan Interaktif (Smart Loading Spinner)
+### 5.  Animasi Pemrosesan Interaktif (Smart Loading Spinner)
 Sistem dilengkapi animasi pemrosesan (`st.spinner`) dan jeda cerdas (*processing delay*) saat tombol evaluasi ditekan. Hal ini memberikan transparansi serta pengalaman pengguna (UX) yang realistis bahwa sistem sedang menjalankan komputasi analisis risiko mendalam.
 
-### 6. ✍️ Validasi Input Form Dinamis
-- Input angka dirancang tanpa nilai bawaan (*value=None*) disertai *placeholder* informatif, mengharuskan pengguna mengisi data secara manual.
+### 6.  Validasi Input Form Dinamis
+- Input angka dirancang tanpa nilai bawaan (*value=None*) disertai *placeholder* informatif, mengharuskan user mengisi data secara manual.
 - Dilengkapi sistem penahan (*input validation guardrail*) untuk mencegah kesalahan sistem jika ada parameter yang belum diisi.
 
 ---
@@ -182,6 +182,6 @@ Aplikasi akan langsung terbuka di browser lokal pada alamat `http://localhost:85
 
 ---
 
-## 👨‍💻 Kontributor & Lisensi
+##  Kontributor & Lisensi
 Proyek ini dikembangkan untuk keperluan penelitian skripsi dan implementasi sistem pendukung keputusan penyaluran kredit UMKM.
 Lisensi: Open-Source untuk tujuan edukasi dan riset.
