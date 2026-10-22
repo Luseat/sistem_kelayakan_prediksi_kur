@@ -1,6 +1,6 @@
 # 🏦 Sistem Prediksi Kelayakan Kredit Usaha Rakyat (KUR) UMKM
 
-Aplikasi berbasis web untuk memprediksi kelayakan dan risiko gagal bayar calon debitur Kredit Usaha Rakyat (KUR) di sektor UMKM. Sistem ini mengadopsi pendekatan **Hybrid Evaluation Architecture**: memadukan *Financial Hard Business Rule* (analisis rasio kapasitas angsuran perbankan) dan *Machine Learning Ensemble* (**Random Forest** + **Bagging Classifier** dengan teknik **Voting Classifier** & **SMOTE**).
+Aplikasi berbasis web untuk memprediksi kelayakan dan risiko gagal bayar calon debitur Kredit Usaha Rakyat (KUR) di sektor UMKM. Sistem ini mengadopsi pendekatan **Hybrid Evaluation Architecture**: memadukan *Financial Hard Business Rule* (analisis rasio kapasitas angsuran perbankan), *Machine Learning Ensemble* (**Random Forest** + **Bagging Classifier** dengan teknik **Voting Classifier** & **SMOTE**), serta modul cerdas **What-If Recommendation Engine** untuk simulasi restrukturisasi kredit.
 
 ---
 
@@ -10,27 +10,28 @@ Pemberian fasilitas kredit bagi pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) m
 - **Subjektivitas & Human Error**: Penilaian analis kredit berisiko inkonsisten antar-staf verifikator.
 - **Efisiensi Waktu**: Proses analisis kelayakan berkas fisik memakan waktu yang cukup lama.
 - **Risiko Kredit Macet (NPL)**: Potensi kerugian finansial akibat salah meloloskan calon debitur berisiko gagal bayar tinggi (*False Positive*).
+- **Ketiadaan Solusi Alternatif**: Penolakan kredit sering kali bersifat final tanpa memberikan opsi alternatif penyesuaian fasilitas pinjaman bagi nasabah yang potensial.
 
-Sistem ini dikembangkan sebagai solusi otomatisasi analisis kredit yang objektif, transparan, cepat, dan presisi tinggi guna meminimalisir risiko kredit macet.
+Sistem ini dikembangkan sebagai solusi otomatisasi analisis kredit yang objektif, transparan, cepat, dan presisi tinggi guna meminimalisir risiko kredit macet sekaligus memberikan rekomendasi finansial yang adaptif.
 
 ---
 
 ## 🚀 Fitur Utama & Cara Kerja Sistem (Hybrid Architecture)
 
-Sistem mengadopsi arsitektur evaluasi dua lapis (*Dual-Layer Decision Model*) yang dilengkapi dengan umpan balik visual komprehensif:
+Sistem mengadopsi arsitektur evaluasi dua lapis (*Dual-Layer Decision Model*) yang terintegrasi dengan modul analitik dan simulasi bisnis:
 
 ```
                        [ Input Data Calon Debitur ]
                                     │
                                     ▼
        ┌────────────────────────────────────────────────────────┐
-       │   Simulasi Pemrosesan & Visual Feedback                │
+       │   Simulasi Pemrosesan & Visual Feedback (st.spinner)   │
        │    Analisis profil risiko nasabah secara real-time     │
        └────────────────────────────┬───────────────────────────┘
                                     │
                                     ▼
        ┌────────────────────────────────────────────────────────┐
-       │   📊 Kartu Ringkasan Kapasitas Finansial               │
+       │   📊 Kartu Ringkasan Kapasitas Finansial (st.metric)   │
        │    - Estimasi Angsuran / Bulan (Rp)                    │
        │    - Debt Service Ratio / DSR (% vs batas aman 40%)    │
        │    - Sisa Omset Bersih (Status Surplus / Defisit)      │
@@ -48,16 +49,20 @@ Sistem mengadopsi arsitektur evaluasi dua lapis (*Dual-Layer Decision Model*) ya
                     ▼                               ▼
        ❌ REJECTED BY SYSTEM RULE      ┌─────────────────────────────┐
         (Kapasitas Finansial Kurang)   │ Lapis 2: Machine Learning   │
-                                       │    Pipeline (Scikit-Learn)  │
-                                       │  - Scaling & One-Hot Encode │
-                                       │  - Voting Classifier        │
-                                       │    (Random Forest + Bagging)│
-                                       └──────────────┬──────────────┘
+                    │                  │    Pipeline (Scikit-Learn)  │
+                    ▼                  │  - Scaling & One-Hot Encode │
+       💡 What-If Recommendation Engine│  - Voting Classifier        │
+        - Opsi 1: Perpanjangan Tenor   │    (Random Forest + Bagging)│
+        - Opsi 2: Penyesuaian Plafon   └──────────────┬──────────────┘
                                                       │
                                       ┌───────────────┴───────────────┐
                                       ▼                               ▼
                            ✅ APPROVED BY AI               ❌ REJECTED BY AI
                         (Risiko Rendah / Layak)          (Pola Risiko Macet Tinggi)
+                                                                      │
+                                                                      ▼
+                                                         💡 Saran Mitigasi Risiko
+                                                         (Survei, Mutasi, Agunan)
 ```
 
 ### 1. 📊 Kartu Ringkasan Kapasitas Finansial (Financial Metrics Cards)
@@ -66,8 +71,13 @@ Sebelum hasil keputusan ditampilkan, sistem menyajikan 3 metrik kesehatan finans
 - **Rasio Beban Cicilan (Debt Service Ratio / DSR)**: Persentase beban cicilan terhadap omset bulanan, dilengkapi indikator warna dinamis (berwarna hijau jika dalam batas aman $\le 40\%$, dan otomatis merah jika melampaui batas aman $> 40\%$).
 - **Sisa Omset Bersih (Disposable Income)**: Estimasi dana tersisa setelah dipotong angsuran, lengkap dengan penanda status **Surplus** atau **Defisit**.
 
-### 2. 🔄 Animasi Pemrosesan Interaktif (Smart Loading Spinner)
-Sistem dilengkapi animasi pemrosesan (`st.spinner`) dan jeda cerdas (*processing delay*) saat tombol evaluasi ditekan. Hal ini memberikan transparansi serta pengalaman pengguna (UX) yang realistis bahwa sistem sedang menjalankan komputasi analisis risiko mendalam.
+### 2. 💡 Fitur Rekomendasi Alternatif (What-If Analysis Engine)
+Ketika pengajuan ditolak pada Lapis 1 karena rasio cicilan melampaui batas toleransi risiko ($> 40\%$), sistem tidak hanya menolak, tetapi secara proaktif menghitung **solusi restrukturisasi kredit** secara otomatis:
+- **Opsi 1 (Perpanjangan Tenor)**: Menghitung tenor pengembalian minimal agar cicilan bulanan turun hingga memenuhi batas aman rasio keuangan:
+  $$\text{Tenor Rekomendasi} = \left\lceil \frac{\text{Jumlah Pinjaman}}{\text{Batas Aman Cicilan}} \right\rceil$$
+- **Opsi 2 (Penyesuaian Plafon Pinjaman)**: Menghitung nominal pinjaman maksimal yang realistis berdasarkan jangka waktu (tenor) yang diinginkan nasabah:
+  $$\text{Plafon Maksimal Rekomendasi} = \text{Batas Aman Cicilan} \times \text{Tenor Pinjaman}$$
+- **Proteksi Pinjaman Ekstrem**: Jika nilai pinjaman terlalu jauh melampaui kapasitas omset bulanan (misal melebihi batas tenor 20 tahun), sistem memberikan arahan bagi nasabah untuk meningkatkan skala omset usaha terlebih dahulu atau mengajukan fasilitas kredit mikro yang proporsional.
 
 ### 3. 🛡️ Lapis 1 - Financial Hard Rule (Akal Sehat Finansial)
 - Menguji kelayakan rasio kapasitas bayar calon debitur.
@@ -77,8 +87,12 @@ Sistem dilengkapi animasi pemrosesan (`st.spinner`) dan jeda cerdas (*processing
 - Jika calon debitur lolos evaluasi finansial Lapis 1, data dialirkan ke pipeline Machine Learning.
 - Model memadukan **Tuned Random Forest Classifier** dan **Tuned Bagging Classifier** melalui mekanisme konsensus **Hard Voting**.
 - Ketimpangan kelas (*class imbalance*) ditangani menggunakan teknik **SMOTE (Synthetic Minority Over-sampling Technique)** pada saat pelatihan agar sistem memiliki sensitivitas tinggi (*Recall*) dalam mendeteksi potensi debitur bermasalah.
+- **Saran Mitigasi Risiko**: Jika nasabah lolos rasio finansial namun ditolak oleh AI, sistem memberikan panduan audit lapangan (verifikasi tempat usaha, cek mutasi rekening 3 bulan terakhir, dan pertimbangan agunan tambahan).
 
-### 5. ✍️ Validasi Input Form Dinamis
+### 5. 🔄 Animasi Pemrosesan Interaktif (Smart Loading Spinner)
+Sistem dilengkapi animasi pemrosesan (`st.spinner`) dan jeda cerdas (*processing delay*) saat tombol evaluasi ditekan. Hal ini memberikan transparansi serta pengalaman pengguna (UX) yang realistis bahwa sistem sedang menjalankan komputasi analisis risiko mendalam.
+
+### 6. ✍️ Validasi Input Form Dinamis
 - Input angka dirancang tanpa nilai bawaan (*value=None*) disertai *placeholder* informatif, mengharuskan pengguna mengisi data secara manual.
 - Dilengkapi sistem penahan (*input validation guardrail*) untuk mencegah kesalahan sistem jika ada parameter yang belum diisi.
 
@@ -109,7 +123,7 @@ Sistem dilengkapi animasi pemrosesan (`st.spinner`) dan jeda cerdas (*processing
 kredit_usaha_rakyat/
 │
 ├── .gitignore                                     # Mengabaikan folder env, venv, cache pyc
-├── app.py                                         # Aplikasi web Streamlit (UI, Hard Rule, & Integrasi AI)
+├── app.py                                         # Aplikasi web Streamlit (UI, Hard Rule, What-If Engine, & Integrasi AI)
 ├── pembuatan_model_random_forest_&_bagging.ipynb  # Notebook eksplorasi data, SMOTE, GridSearchCV, & ekspor model
 ├── README.md                                      # Dokumentasi teknis proyek
 │
