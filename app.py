@@ -131,4 +131,15 @@ if st.button("Mulai Prediksi Kelayakan"):
                 st.info(" **Saran Mitigasi Risiko untuk analis kredit:**\n"
                         "- Lakukan verifikasi fisik lapangan terhadap tempat usaha dan chek mutasi rekening 3 bulan terakhir.\n"
                         "- Pertimbangkan opsi penambahan  agunan fisik untuk syarat penjamin (*guarantor*) sebelum mengambil keputusan akhir.")
+
+
+st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+
+st.markdown("---")
+st.markdown(
+    "<p style='text-align: center; color: gray; margin-bottom: 5px;'>"
+    "Copyright &copy; 2026 Hanifudin Robbani | All Rights Reserved."
+    "</p>", 
+    unsafe_allow_html=True
+)
             
