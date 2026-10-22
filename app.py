@@ -95,6 +95,11 @@ if st.button("Mulai Prediksi Kelayakan"):
                             (Estimasi cicilan baru menjadi **Rp {int(cicilan_baru):,}** /bulan dengan rasio beban) ** {rasio_baru:.1f}%**)*.
                             - **Opsi 2 (Sesuaikan platform):** Jika nasabah ingin tetap tenor **{int(tenor_pinjaman)} bulan**, nominal pinjaman maksimal yang disarankan adalah **Rp {int(pinjaman_maks_rekomendasi):,}**.
                             """.replace(",", "."))
+            else:
+                st.markdown(f"""
+                            Nominal pinjaman yang diajukan (**Rp {int(jumlah_pinjaman):,}**) terlalu jauh melampaui kapasitas omset bulanan nasabah (**Rp {int(omset):,}**).
+                            - Disarankan nasabah meningkatkan skla omset usaha terlebih dahulu  atau mengajukan  platforn pinjman mikro yang lebih proposional.
+                            """.replace(",", "."))
             
             
         else:
