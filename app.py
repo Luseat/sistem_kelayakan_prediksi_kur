@@ -89,16 +89,16 @@ if st.button("Mulai Prediksi Kelayakan"):
             
             if tenor_rekomendasi <= 240:
                 cicilan_baru = jumlah_pinjaman / tenor_rekomendasi
-                rasio_baru = (cicilan_baru / omset) * 180
-                st.markdown(""" Agar pengajuan ini memenuhi kriteria rasio aman perbankan (DSR $\le$ 40%), analis dapat menawarkan alternatif berikut:
+                rasio_baru = (cicilan_baru / omset) * 100
+                st.markdown(f""" Agar pengajuan ini memenuhi kriteria rasio aman perbankan (DSR $\le$ 40%), analis dapat menawarkan alternatif berikut:
                             - **Opsi 1 (Perpanjang Tenor): ** Naikan tenor dari **{int(tenor_pinjaman)} bulan** menjadi minimal **{tenor_rekomendasi} bulan**.
-                            (Estimasi cicilan baru menjadi **Rp {int(cicilan_baru):,}** /bulan dengan rasio beban) ** {rasio_baru:.1f}%**)*.
-                            - **Opsi 2 (Sesuaikan platform):** Jika nasabah ingin tetap tenor **{int(tenor_pinjaman)} bulan**, nominal pinjaman maksimal yang disarankan adalah **Rp {int(pinjaman_maks_rekomendasi):,}**.
+                            *(Estimasi cicilan baru menjadi **Rp {int(cicilan_baru):,}** /bulan dengan rasio beban ** {rasio_baru:.1f}%**)*.
+                            - **Opsi 2 (Sesuaikan plafon):** Jika nasabah ingin tetap tenor **{int(tenor_pinjaman)} bulan**, nominal pinjaman maksimal yang disarankan adalah **Rp {int(pinjaman_maks_rekomendasi):,}**.
                             """.replace(",", "."))
             else:
                 st.markdown(f"""
                             Nominal pinjaman yang diajukan (**Rp {int(jumlah_pinjaman):,}**) terlalu jauh melampaui kapasitas omset bulanan nasabah (**Rp {int(omset):,}**).
-                            - Disarankan nasabah meningkatkan skla omset usaha terlebih dahulu  atau mengajukan  platforn pinjman mikro yang lebih proposional.
+                            - Disarankan nasabah meningkatkan skala omset usaha terlebih dahulu  atau mengajukan  platforn pinjman mikro yang lebih proposional.
                             """.replace(",", "."))
             
             
@@ -126,4 +126,9 @@ if st.button("Mulai Prediksi Kelayakan"):
             else:
                 st.error("❌ **RISIKO GAGAL BAYAR TINGGI (REJECTED BY AI)**")
                 st.write("Nasabah lolos secara rasio finansial, namun AI mendeteksi pola historis yang berpotensi tinggi mengakibatkan kredit macet.")
+                
+                
+                st.info(" **Saran Mitigasi Risiko untuk analis kredit:**\n"
+                        "- Lakukan verifikasi fisik lapangan terhadap tempat usaha dan chek mutasi rekening 3 bulan terakhir.\n"
+                        "- Pertimbangkan opsi penambahan  agunan fisik untuk syarat penjamin (*guarantor*) sebelum mengambil keputusan akhir.")
             
