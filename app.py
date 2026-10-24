@@ -18,7 +18,7 @@ tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
 with tab1:
     st.header("Masukan Data Calon Debitur")
     col1, col2 = st.columns(2)
-########
+
     with col1:
         usia = st.number_input("Usia Nasabah", min_value=18, max_value=100, value=None, placeholder="Masukkan usia")
         jenis_kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
@@ -131,6 +131,22 @@ with tab1:
                     st.info(" **Saran Mitigasi Risiko untuk analis kredit:**\n"
                             "- Lakukan verifikasi fisik lapangan terhadap tempat usaha dan chek mutasi rekening 3 bulan terakhir.\n"
                             "- Pertimbangkan opsi penambahan  agunan fisik untuk syarat penjamin (*guarantor*) sebelum mengambil keputusan akhir.")
+
+
+with tab2:
+    st.header("Evaluasi kelayakan kredit massal via file csv/excel")
+    st.write("Unggah file calon debitur untuk memproses puluhan hingga ratusan data pengajuan sekaligus.")
+    
+    contoh_data = pd.DataFrame({
+        'usia': [35, 28, 45],
+        'jenis_kelamin': ['laki-laki', 'perempuan', 'laki-laki'],
+        'status': ['wirausaha', 'karyawan', 'wirausaha'],
+        'omset': [15000000, 5000000, 25000000],
+        'jumlah_pinjaman': [30000000, 40000000, 50000000],
+        'tenor_pinjaman_(bulan)': [12, 6, 24],
+        'jumlah_anak': [2, 0, 3],
+        'riwayat_telat_bayar': [1, 0, 1]
+    })
 
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
