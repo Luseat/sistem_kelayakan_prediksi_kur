@@ -13,9 +13,12 @@ def load_model():
 
 model = load_model()
 
-st.header("Masukan Data Calon Debitur")
-col1, col2 = st.columns(2)
+tab1, tab2 = st.tabs(["Evaluasi Individu"],["Evaluasi Massal (Upload CSV)"])
 
+with tab1:
+    st.header("Masukan Data Calon Debitur")
+    col1, col2 = st.columns(2)
+########
 with col1:
     usia = st.number_input("Usia Nasabah", min_value=18, max_value=100, value=None, placeholder="Masukkan usia")
     jenis_kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
