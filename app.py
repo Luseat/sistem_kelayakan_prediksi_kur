@@ -134,7 +134,7 @@ with tab1:
 
 
 with tab2:
-    st.header("Evaluasi kelayakan kredit massal via file csv/excel")
+    st.header("Evaluasi kelayakan kredit massal via file csv")
     st.write("Unggah file calon debitur untuk memproses puluhan hingga ratusan data pengajuan sekaligus.")
     
     contoh_data = pd.DataFrame({
@@ -147,6 +147,19 @@ with tab2:
         'jumlah_anak': [2, 0, 3],
         'riwayat_telat_bayar': [1, 0, 1]
     })
+    
+    
+    csv_template = contoh_data.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label=" Unduh Template CSV",
+        data=csv_template,
+        file_name="template_pengujian_kur.csv",
+        mime="text/csv"
+    )
+    
+    st.markdown("---")
+    
+    uploaded_file = st.file_uploader(" pilih file CSV calon nasabah", type=["csv"])
 
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
