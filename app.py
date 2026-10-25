@@ -169,9 +169,27 @@ with tab2:
             st.subheader("Pratinjau Data:")
             st.dataframe(df_upload.head())
             
-            
+            #normalisasi dari tenor_pinjaman_(bulan) -> tenor_pinjaman
             if 'tenor_pinjaman' in df_upload.columns and 'tenor_pinjaman_(bulan)' not in df_upload.columns:
                 df_upload.rename(columns={'tenor_pinjaman': 'tenor_pinjaman_(bulan)'}, inplace=True)
+                
+            kolom_wajib = [
+                'usia', 
+                'jenis_kelamin', 
+                'status', 
+                'omset', 
+                'jumlah_pinjaman', 
+                'tenor_pinjaman_(bulan)', 
+                'jumlah_anak', 
+                'riwayat_telat_bayar'
+            ]
+            
+            
+            #validasi user wajib input semua
+            kolom_kurang = [co1 for co1 in kolom_wajib if co1 not in df_upload.columns]
+            if kolom_kurang:
+                st.error(f"❌ File CSV tidak valid! Kolom berikut tidak ditemukan: {kolom_kurang}")
+                st.info("Silahkan unduh dan gunakan template contoh diatas guna memastikan format kolom yang sesuai.")
 
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
