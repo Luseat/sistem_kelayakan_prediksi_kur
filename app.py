@@ -190,7 +190,12 @@ with tab2:
             if kolom_kurang:
                 st.error(f"❌ File CSV tidak valid! Kolom berikut tidak ditemukan: {kolom_kurang}")
                 st.info("Silahkan unduh dan gunakan template contoh diatas guna memastikan format kolom yang sesuai.")
-
+            else:
+                if st.button("Mulai evaluasi massal"):
+                    with st.spinner("Sedang memproses data & mengevaluasi massal kelayakan risiko kredit (Hard Rule & AI Ensemble)..."):
+                        time.sleep(3.5)
+                        
+                        df_hasil = df_upload.copy()
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
