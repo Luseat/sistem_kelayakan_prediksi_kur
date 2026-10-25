@@ -158,8 +158,20 @@ with tab2:
     )
     
     st.markdown("---")
-    
     uploaded_file = st.file_uploader(" pilih file CSV calon nasabah", type=["csv"])
+    
+    
+    if uploaded_file is not None:
+        try:
+            df_upload = pd.read_csv(uploaded_file)
+            st.success(f"Berhasil memuat {len(df_upload)} baris data calon debitur")
+            
+            st.subheader("Pratinjau Data:")
+            st.dataframe(df_upload.head())
+            
+            
+            if 'tenor_pinjaman' in df_upload.columns and 'tenor_pinjaman_(bulan)' not in df_upload.columns:
+                df_upload.rename(columns={'tenor_pinjaman': 'tenor_pinjaman_(bulan)'}, inplace=True)
 
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
