@@ -197,8 +197,17 @@ with tab2:
                         
                         df_hasil = df_upload.copy()
                         
+                        #format teks kecil di kolom kategorikal
                         df_hasil['cicilan_per_bulan'] = df_hasil['jumlah_pinjaman'] / df_hasil['tenor_pinjaman_(bulan)']
                         df_hasil['status'] = df_hasil['status'].astype(str).str.lower()
+                        
+                         # Perhitungan Rasio Finansial
+                        df_hasil['cicilan_per_bulan'] = df_hasil['jumlah_pinjaman'] / df_hasil['tenor_pinjaman_(bulan)']
+                        df_hasil['rasio_cicilan_%'] = (df_hasil['cicilan_per_bulan'] / df_hasil['omset']) * 100
+                        batas_aman = 0.40 * df_hasil['omset']
+                        
+                        # Hard Rule: DSR > 40%
+                        mask_hard_rule_reject = df_hasil['cicilan_per_bulan'] > batas_aman
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
