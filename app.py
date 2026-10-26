@@ -198,16 +198,30 @@ with tab2:
                         df_hasil = df_upload.copy()
                         
                         #format teks kecil di kolom kategorikal
-                        df_hasil['cicilan_per_bulan'] = df_hasil['jumlah_pinjaman'] / df_hasil['tenor_pinjaman_(bulan)']
+                        df_hasil['jenis_kelamin'] = df_hasil['jenis_kelamin'].astype(str).str.lower()
                         df_hasil['status'] = df_hasil['status'].astype(str).str.lower()
+                        
                         
                          # Perhitungan Rasio Finansial
                         df_hasil['cicilan_per_bulan'] = df_hasil['jumlah_pinjaman'] / df_hasil['tenor_pinjaman_(bulan)']
                         df_hasil['rasio_cicilan_%'] = (df_hasil['cicilan_per_bulan'] / df_hasil['omset']) * 100
                         batas_aman = 0.40 * df_hasil['omset']
                         
+                        
                         # Hard Rule: DSR > 40%
                         mask_hard_rule_reject = df_hasil['cicilan_per_bulan'] > batas_aman
+                        
+                        df_hasil['Status_Keputusan'] = ""
+                        df_hasil['Keterangan_Evaluasi'] = ""
+                        
+                        df_hasil.loc[mask_hard_rule_reject, 'Status_Keputusan'] = "REJECTED"
+                        df_hasil.loc[mask_hard_rule_reject, 'Keterangan_Evaluasi'] = "Ditolak System Rule (Rasio cicilan > 40% dari omset)"
+                        
+                        
+                        data_lolos_rule = df_hasil[~mask_hard_rule_reject]
+                        if len(data_lolos_rule) > 0: # Ambil fitur yang dibutuhkan oleh model pipeline
+                            X_batch = data_lolos_rule[kolom_wajib]
+                            pred_batch = model.predict(X_batch)
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
