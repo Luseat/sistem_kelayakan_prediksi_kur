@@ -196,6 +196,9 @@ with tab2:
                         time.sleep(3.5)
                         
                         df_hasil = df_upload.copy()
+                        
+                        df_hasil['cicilan_per_bulan'] = df_hasil['jumlah_pinjaman'] / df_hasil['tenor_pinjaman_(bulan)']
+                        df_hasil['status'] = df_hasil['status'].astype(str).str.lower()
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
