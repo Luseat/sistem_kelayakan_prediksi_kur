@@ -222,6 +222,16 @@ with tab2:
                         if len(data_lolos_rule) > 0: # Ambil fitur yang dibutuhkan oleh model pipeline
                             X_batch = data_lolos_rule[kolom_wajib]
                             pred_batch = model.predict(X_batch)
+                            
+                            hasil_status_ai = ["APPROVED" if p == 0 else "REJECTED" for p in pred_batch]
+                            hasil_ket_ai = [
+                                "Disetujui AI (Kapasitas aman & risiko rendah)" if p == 0
+                                else "Ditolak AI (Terdeteksi pola historis risiko macet)"
+                                for p in pred_batch
+                            ]
+                            
+                            df_hasil.loc[~mask_hard_rule_reject, 'Status_Keputusan'] = hasil_status_ai
+                            df_hasil.loc[~mask_hard_rule_reject, 'Keterangan_Evaluasi'] = hasil_ket_ai
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
