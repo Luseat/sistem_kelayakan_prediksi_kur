@@ -232,6 +232,13 @@ with tab2:
                             
                             df_hasil.loc[~mask_hard_rule_reject, 'Status_Keputusan'] = hasil_status_ai
                             df_hasil.loc[~mask_hard_rule_reject, 'Keterangan_Evaluasi'] = hasil_ket_ai
+                            
+                            st.markdown("---")
+                            st.subheader("📊 Ringkasan Hasil Evaluasi Massal")
+                            
+                            total_pengajuan = len(df_hasil)
+                            total_approved = len(df_hasil[df_hasil['Status_Keputusan'] == 'APPROVED'])
+                            total_rejected = len(df_hasil[df_hasil['Status_Keputusan'] == 'REJECTED'])
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
