@@ -244,6 +244,13 @@ with tab2:
                             c1.metric("Total Data Calon Debitur", f"{total_pengajuan} Nasabah")
                             c2.metric("Total Layak (APPROVED)", f"{total_approved} Nasabah", delta="Disetujui")
                             c3.metric("Total Tolak (REJECTED)", f"{total_rejected} Nasabah", delta="Ditolak", delta_color="inverse")
+                            
+                            st.subheader(" Tabel Hasil Keputusan Lengkap:") #📄 Tabel Hasil Keputusan Lengkap:
+                            st.dataframe(df_hasil[[
+                                'omset', 'jumlah_pinjaman', 'tenor_pinjaman_(bulan)',
+                                'cicilan_per_bulan', 'rasio_cicilan_%',
+                                'Status_Keputusan', 'Keterangan_Evaluasi'
+                            ]])
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
