@@ -239,6 +239,11 @@ with tab2:
                             total_pengajuan = len(df_hasil)
                             total_approved = len(df_hasil[df_hasil['Status_Keputusan'] == 'APPROVED'])
                             total_rejected = len(df_hasil[df_hasil['Status_Keputusan'] == 'REJECTED'])
+                            
+                            c1, c2, c3 = st.columns(3)
+                            c1.metric("Total Data Calon Debitur", f"{total_pengajuan} Nasabah")
+                            c2.metric("Total Layak (APPROVED)", f"{total_approved} Nasabah", delta="Disetujui")
+                            c3.metric("Total Tolak (REJECTED)", f"{total_rejected} Nasabah", delta="Ditolak", delta_color="inverse")
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
