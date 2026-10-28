@@ -251,6 +251,18 @@ with tab2:
                                 'cicilan_per_bulan', 'rasio_cicilan_%',
                                 'Status_Keputusan', 'Keterangan_Evaluasi'
                             ]])
+                            
+                            hasil_csv = df_hasil.to_csv(index=False).encode('utf-8') 
+                            st.download_button(
+                                label="⬇️ Donwload Hasil Evaluasi (.csv)",
+                                data = hasil_csv,
+                                file_name="hasil_evaluasi_kelayakan_kur_massal.csv",
+                                mine="text/csv"
+                            )
+                            
+        except Exception as e:
+            st.error(f"Terjadi kesalahan saat memproses file CSV: {e}")
+                            
 
 st.markdown("<br><br><br><br>", unsafe_allow_html=True)
 
