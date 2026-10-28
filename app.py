@@ -233,32 +233,32 @@ with tab2:
                             df_hasil.loc[~mask_hard_rule_reject, 'Status_Keputusan'] = hasil_status_ai
                             df_hasil.loc[~mask_hard_rule_reject, 'Keterangan_Evaluasi'] = hasil_ket_ai
                             
-                            st.markdown("---")
-                            st.subheader("📊 Ringkasan Hasil Evaluasi Massal")
-                            
-                            total_pengajuan = len(df_hasil)
-                            total_approved = len(df_hasil[df_hasil['Status_Keputusan'] == 'APPROVED'])
-                            total_rejected = len(df_hasil[df_hasil['Status_Keputusan'] == 'REJECTED'])
-                            
-                            c1, c2, c3 = st.columns(3)
-                            c1.metric("Total Data Calon Debitur", f"{total_pengajuan} Nasabah")
-                            c2.metric("Total Layak (APPROVED)", f"{total_approved} Nasabah", delta="Disetujui")
-                            c3.metric("Total Tolak (REJECTED)", f"{total_rejected} Nasabah", delta="Ditolak", delta_color="inverse")
-                            
-                            st.subheader(" Tabel Hasil Keputusan Lengkap:") #📄 Tabel Hasil Keputusan Lengkap:
-                            st.dataframe(df_hasil[[
-                                'omset', 'jumlah_pinjaman', 'tenor_pinjaman_(bulan)',
-                                'cicilan_per_bulan', 'rasio_cicilan_%',
-                                'Status_Keputusan', 'Keterangan_Evaluasi'
-                            ]])
-                            
-                            hasil_csv = df_hasil.to_csv(index=False).encode('utf-8') 
-                            st.download_button(
-                                label="⬇️ Donwload Hasil Evaluasi (.csv)",
-                                data = hasil_csv,
-                                file_name="hasil_evaluasi_kelayakan_kur_massal.csv",
-                                mine="text/csv"
-                            )
+                        st.markdown("---")
+                        st.subheader("📊 Ringkasan Hasil Evaluasi Massal")
+                        
+                        total_pengajuan = len(df_hasil)
+                        total_approved = len(df_hasil[df_hasil['Status_Keputusan'] == 'APPROVED'])
+                        total_rejected = len(df_hasil[df_hasil['Status_Keputusan'] == 'REJECTED'])
+                        
+                        c1, c2, c3 = st.columns(3)
+                        c1.metric("Total Data Calon Debitur", f"{total_pengajuan} Nasabah")
+                        c2.metric("Total Layak (APPROVED)", f"{total_approved} Nasabah", delta="Disetujui")
+                        c3.metric("Total Tolak (REJECTED)", f"{total_rejected} Nasabah", delta="Ditolak", delta_color="inverse")
+                        
+                        st.subheader(" Tabel Hasil Keputusan Lengkap:") #📄 Tabel Hasil Keputusan Lengkap:
+                        st.dataframe(df_hasil[[
+                            'omset', 'jumlah_pinjaman', 'tenor_pinjaman_(bulan)',
+                            'cicilan_per_bulan', 'rasio_cicilan_%',
+                            'Status_Keputusan', 'Keterangan_Evaluasi'
+                        ]])
+                        
+                        hasil_csv = df_hasil.to_csv(index=False).encode('utf-8') 
+                        st.download_button(
+                            label="⬇️ Download Hasil Evaluasi (.csv)",
+                            data = hasil_csv,
+                            file_name="hasil_evaluasi_kelayakan_kur_massal.csv",
+                            mime="text/csv"
+                        )
                             
         except Exception as e:
             st.error(f"Terjadi kesalahan saat memproses file CSV: {e}")
