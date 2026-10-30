@@ -16,7 +16,7 @@ Sistem ini dikembangkan sebagai solusi otomatisasi analisis kredit yang objektif
 
 ---
 
-## 🚀 Fitur Utama & Cara Kerja Sistem (Hybrid Architecture)
+##  Fitur Utama & Cara Kerja Sistem (Hybrid Architecture)
 
 Sistem mengadopsi antarmuka berbasis tab (*Dual-Tab Interface*) dengan arsitektur evaluasi dua lapis (*Dual-Layer Decision Model*):
 
@@ -65,25 +65,25 @@ Sistem mengadopsi antarmuka berbasis tab (*Dual-Tab Interface*) dengan arsitektu
                                                               (Survei, Mutasi, Agunan)
 ```
 
-### 1. 📝 Tab 1: Evaluasi Individu (Single Entry)
+### 1.  Tab 1: Evaluasi Individu (Single Entry)
 - **Kartu Ringkasan Finansial (`st.metric`)**: Menampilkan estimasi angsuran bulanan, rasio beban cicilan (Debt Service Ratio / DSR dengan indikator warna dinamis), serta sisa omset bersih (status Surplus atau Defisit).
 - **Lapis 1 - Hard Business Rule (Akal Sehat Finansial)**: Menolak pengajuan secara otomatis (*Rejected by System Rule*) jika rasio cicilan $> 40\%$ omset bulanan demi mencegah kredit macet.
 - **What-If Recommendation Engine**: Memberikan solusi restrukturisasi kredit otomatis saat ditolak Lapis 1 (perhitungan tenor minimal rekomendasi dan plafon maksimal rekomendasi).
 - **Lapis 2 - Machine Learning Ensemble Pipeline**: Evaluasi berbasis model konsensus *Hard Voting* (Random Forest + Bagging Classifier) dengan proteksi data leakage via SMOTE.
 - **Saran Mitigasi Risiko**: Panduan verifikasi fisik lapangan, cek mutasi rekening, dan opsi agunan tambahan bagi debitur yang ditolak AI.
 
-### 2. 📁 Tab 2: Evaluasi Massal via Upload CSV (Batch Processing)
+### 2.  Tab 2: Evaluasi Massal via Upload CSV (Batch Processing)
 - **Unduh Template CSV**: Menyediakan contoh berkas CSV bawaan agar pengguna dapat memastikan format header kolom sesuai sebelum mengunggah.
 - **Validasi Header Otomatis**: Memeriksa kelengkapan seluruh fitur wajib data calon debitur sebelum pemrosesan dimulai.
 - **High-Speed Batch Evaluation**: Memproses puluhan hingga ratusan data nasabah sekaligus dalam hitungan detik menggunakan vektorisasi Pandas.
 - **Ringkasan Statistik Massal**: Kartu indikator metrik total calon debitur, total pengajuan disetujui (*Approved*), dan total pengajuan ditolak (*Rejected*).
 - **Tabel Keputusan Lengkap & Unduh Laporan**: Menampilkan rincian cicilan per bulan, persentase rasio cicilan, status keputusan, dan alasan evaluasi, serta tombol unduh hasil (*Export to CSV*).
 
-### 3. 🛡️ Validasi Anti-Spam Click (Idempotent Session State Lock)
+### 3.  Validasi Anti-Spam Click (Idempotent Session State Lock)
 - Menggunakan `st.session_state` untuk merekam sidik jari input data terakhir (*last input signature*).
 - Jika pengguna menekan tombol evaluasi berkali-kali secara cepat (*spam click / double-click*), sistem cerdas melewati animasi delay 3.5 detik dan langsung menyajikan hasil secara instan tanpa mengulang antrean loading yang memperlambat sistem.
 
-### 4. ✍️ Validasi Input Form Dinamis
+### 4.  Validasi Input Form Dinamis
 - Input form angka dirancang tanpa nilai bawaan (*value=None*) disertai *placeholder* informatif, mengharuskan pengguna mengisi data secara manual.
 - Dilengkapi sistem penahan (*input validation guardrail*) untuk mencegah eksekusi jika ada parameter yang belum diisi.
 
@@ -127,7 +127,7 @@ kredit_usaha_rakyat/
 
 ---
 
-## 🛠️ Panduan Instalasi & Menjalankan Aplikasi
+##  Panduan Instalasi & Menjalankan Aplikasi
 
 ### 1. Klon Repositori
 ```bash
