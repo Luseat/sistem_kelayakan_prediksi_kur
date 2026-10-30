@@ -38,8 +38,13 @@ with tab1:
         if None in [usia, jumlah_anak, omset, jumlah_pinjaman, tenor_pinjaman]:
             st.warning("⚠️ Mohon ketik dan lengkapi semua data angka di atas sebelum memprediksi.")
         else:
-            with st.spinner(" Sedang memproses data & mengevaluasi kelayakan risiko kredit..."):
-                time.sleep(3.5)
+            input_saat_ini = (usia, jenis_kelamin, status, omset, jumlah_pinjaman, tenor_pinjaman, jumlah_anak, riwayat_telat_bayar)
+            is_spam_click = (st.session_state.get('last_input_individu') == input_saat_ini)
+            
+            if not is_spam_click:
+                with st.spinner(" Sedang memproses data & mengevaluasi kelayakan risiko kredit..."):
+                    time.sleep(3.5)
+                st.session_state['last_input_individu'] = input_saat_ini
             
             
             st.markdown("----")
@@ -192,73 +197,78 @@ with tab2:
                 st.info("Silahkan unduh dan gunakan template contoh diatas guna memastikan format kolom yang sesuai.")
             else:
                 if st.button("Mulai evaluasi massal"):
-                    with st.spinner("Sedang memproses data & mengevaluasi massal kelayakan risiko kredit (Hard Rule & AI Ensemble)..."):
-                        time.sleep(3.5)
+                    file_signature = (uploaded_file.name, len(df_upload))
+                    is_spam_csv = (st.session_state.get('last_csv_signature') == file_signature)
+                    
+                    if not is_spam_csv:
+                        with st.spinner("Sedang memproses data & mengevaluasi massal kelayakan risiko kredit (Hard Rule & AI Ensemble)..."):
+                            time.sleep(3.5)
+                        st.session_state['last_csv_signature'] = file_signature
                         
-                        df_hasil = df_upload.copy()
+                    df_hasil = df_upload.copy()
+                    
+                    #format teks kecil di kolom kategorikal
+                    df_hasil['jenis_kelamin'] = df_hasil['jenis_kelamin'].astype(str).str.lower()
+                    df_hasil['status'] = df_hasil['status'].astype(str).str.lower()
+                    
+                    
+                        # Perhitungan Rasio Finansial
+                    df_hasil['cicilan_per_bulan'] = df_hasil['jumlah_pinjaman'] / df_hasil['tenor_pinjaman_(bulan)']
+                    df_hasil['rasio_cicilan_%'] = (df_hasil['cicilan_per_bulan'] / df_hasil['omset']) * 100
+                    batas_aman = 0.40 * df_hasil['omset']
+                    
+                    
+                    # Hard Rule: DSR > 40%
+                    mask_hard_rule_reject = df_hasil['cicilan_per_bulan'] > batas_aman
+                    
+                    df_hasil['Status_Keputusan'] = ""
+                    df_hasil['Keterangan_Evaluasi'] = ""
+                    
+                    df_hasil.loc[mask_hard_rule_reject, 'Status_Keputusan'] = "REJECTED"
+                    df_hasil.loc[mask_hard_rule_reject, 'Keterangan_Evaluasi'] = "Ditolak System Rule (Rasio cicilan > 40% dari omset)"
+                    
+                    
+                    data_lolos_rule = df_hasil[~mask_hard_rule_reject]
+                    if len(data_lolos_rule) > 0: # Ambil fitur yang dibutuhkan oleh model pipeline
+                        X_batch = data_lolos_rule[kolom_wajib]
+                        pred_batch = model.predict(X_batch)
                         
-                        #format teks kecil di kolom kategorikal
-                        df_hasil['jenis_kelamin'] = df_hasil['jenis_kelamin'].astype(str).str.lower()
-                        df_hasil['status'] = df_hasil['status'].astype(str).str.lower()
-                        
-                        
-                         # Perhitungan Rasio Finansial
-                        df_hasil['cicilan_per_bulan'] = df_hasil['jumlah_pinjaman'] / df_hasil['tenor_pinjaman_(bulan)']
-                        df_hasil['rasio_cicilan_%'] = (df_hasil['cicilan_per_bulan'] / df_hasil['omset']) * 100
-                        batas_aman = 0.40 * df_hasil['omset']
-                        
-                        
-                        # Hard Rule: DSR > 40%
-                        mask_hard_rule_reject = df_hasil['cicilan_per_bulan'] > batas_aman
-                        
-                        df_hasil['Status_Keputusan'] = ""
-                        df_hasil['Keterangan_Evaluasi'] = ""
-                        
-                        df_hasil.loc[mask_hard_rule_reject, 'Status_Keputusan'] = "REJECTED"
-                        df_hasil.loc[mask_hard_rule_reject, 'Keterangan_Evaluasi'] = "Ditolak System Rule (Rasio cicilan > 40% dari omset)"
-                        
-                        
-                        data_lolos_rule = df_hasil[~mask_hard_rule_reject]
-                        if len(data_lolos_rule) > 0: # Ambil fitur yang dibutuhkan oleh model pipeline
-                            X_batch = data_lolos_rule[kolom_wajib]
-                            pred_batch = model.predict(X_batch)
+                        hasil_status_ai = ["APPROVED" if p == 0 else "REJECTED" for p in pred_batch]
+                        hasil_ket_ai = [
+                            "Disetujui AI (Kapasitas aman & risiko rendah)" if p == 0
+                            else "Ditolak AI (Terdeteksi pola historis risiko macet)"
+                            for p in pred_batch
+                        ]
                             
-                            hasil_status_ai = ["APPROVED" if p == 0 else "REJECTED" for p in pred_batch]
-                            hasil_ket_ai = [
-                                "Disetujui AI (Kapasitas aman & risiko rendah)" if p == 0
-                                else "Ditolak AI (Terdeteksi pola historis risiko macet)"
-                                for p in pred_batch
-                            ]
-                            
-                            df_hasil.loc[~mask_hard_rule_reject, 'Status_Keputusan'] = hasil_status_ai
-                            df_hasil.loc[~mask_hard_rule_reject, 'Keterangan_Evaluasi'] = hasil_ket_ai
-                            
-                        st.markdown("---")
-                        st.subheader("📊 Ringkasan Hasil Evaluasi Massal")
+                        df_hasil.loc[~mask_hard_rule_reject, 'Status_Keputusan'] = hasil_status_ai
+                        df_hasil.loc[~mask_hard_rule_reject, 'Keterangan_Evaluasi'] = hasil_ket_ai
                         
-                        total_pengajuan = len(df_hasil)
-                        total_approved = len(df_hasil[df_hasil['Status_Keputusan'] == 'APPROVED'])
-                        total_rejected = len(df_hasil[df_hasil['Status_Keputusan'] == 'REJECTED'])
-                        
-                        c1, c2, c3 = st.columns(3)
-                        c1.metric("Total Data Calon Debitur", f"{total_pengajuan} Nasabah")
-                        c2.metric("Total Layak (APPROVED)", f"{total_approved} Nasabah", delta="Disetujui")
-                        c3.metric("Total Tolak (REJECTED)", f"{total_rejected} Nasabah", delta="Ditolak", delta_color="inverse")
-                        
-                        st.subheader(" Tabel Hasil Keputusan Lengkap:") #📄 Tabel Hasil Keputusan Lengkap:
-                        st.dataframe(df_hasil[[
-                            'omset', 'jumlah_pinjaman', 'tenor_pinjaman_(bulan)',
-                            'cicilan_per_bulan', 'rasio_cicilan_%',
-                            'Status_Keputusan', 'Keterangan_Evaluasi'
-                        ]])
-                        
-                        hasil_csv = df_hasil.to_csv(index=False).encode('utf-8') 
-                        st.download_button(
-                            label="⬇️ Download Hasil Evaluasi (.csv)",
-                            data = hasil_csv,
-                            file_name="hasil_evaluasi_kelayakan_kur_massal.csv",
-                            mime="text/csv"
-                        )
+                    st.markdown("---")
+                    st.subheader("📊 Ringkasan Hasil Evaluasi Massal")
+                    
+                    total_pengajuan = len(df_hasil)
+                    total_approved = len(df_hasil[df_hasil['Status_Keputusan'] == 'APPROVED'])
+                    total_rejected = len(df_hasil[df_hasil['Status_Keputusan'] == 'REJECTED'])
+                    
+                    c1, c2, c3 = st.columns(3)
+                    c1.metric("Total Data Calon Debitur", f"{total_pengajuan} Nasabah")
+                    c2.metric("Total Layak (APPROVED)", f"{total_approved} Nasabah", delta="Disetujui")
+                    c3.metric("Total Tolak (REJECTED)", f"{total_rejected} Nasabah", delta="Ditolak", delta_color="inverse")
+                    
+                    st.subheader(" Tabel Hasil Keputusan Lengkap:") #📄 Tabel Hasil Keputusan Lengkap:
+                    st.dataframe(df_hasil[[
+                        'omset', 'jumlah_pinjaman', 'tenor_pinjaman_(bulan)',
+                        'cicilan_per_bulan', 'rasio_cicilan_%',
+                        'Status_Keputusan', 'Keterangan_Evaluasi'
+                    ]])
+                    
+                    hasil_csv = df_hasil.to_csv(index=False).encode('utf-8') 
+                    st.download_button(
+                        label="⬇️ Download Hasil Evaluasi (.csv)",
+                        data = hasil_csv,
+                        file_name="hasil_evaluasi_kelayakan_kur_massal.csv",
+                        mime="text/csv"
+                    )
                             
         except Exception as e:
             st.error(f"Terjadi kesalahan saat memproses file CSV: {e}")
