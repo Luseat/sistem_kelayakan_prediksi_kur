@@ -30,6 +30,16 @@ def load_model():
 
 model = load_model()
 
+
+def format_rupiah(key):
+    val = st.session_state.get(key, "")
+    digits = "".join(filter(str.isdigit, str(val)))
+    if digits:
+        st.session_state[key] = f"{int(digits):,}".replace(",", ".")
+    else:
+        st.session_state[key] = ""
+
+
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
 
 with tab1:
