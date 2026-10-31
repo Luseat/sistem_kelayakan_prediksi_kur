@@ -6,6 +6,23 @@ import time
 st.title("Aplikasi Prediksi Kelayakan Kredit Usaha Rakyat (KUR)")
 st.write("Sistem ini memprediksi gagal bayar calon debitur KUR berdasarkan input data yang diberikan.")
 
+
+st.markdown("""
+<style>
+[data-testid="stMetricValue"] {
+    font-size: 1.35rem !important; /* Perkecil sedikit ukuran font agar muat angka panjang */
+    white-space: normal !important;
+    overflow: visible !important;
+}
+[data-testid="stMetricValue"] > div {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important; /* Hapus efek titik-titik potong (...) */
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 #Load Model Pipeline yang udah diekspor dari Colab
 @st.cache_resource
 def load_model():
