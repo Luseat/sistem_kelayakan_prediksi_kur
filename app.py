@@ -53,6 +53,13 @@ with tab1:
         jumlah_anak = st.number_input("Jumlah Anak/Tanggungan", min_value=0, max_value=20, value=None, placeholder="Jika tidak ada, isi 0")
         
     with col2:
+        omset_str = st.text_input(
+            "Pendapatan / Omset per Bulan (Rp)",
+            key="input_omset",
+            on_change=format_rupiah,
+            args=("input_omset"),
+            placeholder="Masukan omset per bulan" # Ketik angka, misal: 9000000
+        )
         omset = st.number_input("Pendapatan / Omset per Bulan (Rp)", min_value=0, step=1000000, value=None, placeholder="Masukkan omset per bulan")
         jumlah_pinjaman = st.number_input("Nominal Pinjaman yang Diajukan (Rp)", min_value=1, value=None, step=1000000, placeholder="Masukkan nominal pinjaman")
         tenor_pinjaman = st.number_input("Tenor Pinjaman (Bulan)", min_value=1, max_value=240, value=None, placeholder="Masukkan tenor pinjaman")
