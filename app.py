@@ -64,7 +64,13 @@ with tab1:
         digits_omset = "".join(filter(str.isdigit, str(omset_str)))
         omset = int(digits_omset) if digits_omset else None
         
-        #pinjaman_str = st.text_input()
+        pinjaman_str = st.text_input(
+            "Nominal Pinjaman yang Diajukan (Rp)",
+            key="input_pinjaman",
+            on_change=format_rupiah,
+            args=("input_pinjaman"),
+            placeholder="Masukan nominal pinjaman"
+        )
         
         omset = st.number_input("Pendapatan / Omset per Bulan (Rp)", min_value=0, step=1000000, value=None, placeholder="Masukkan omset per bulan")
         jumlah_pinjaman = st.number_input("Nominal Pinjaman yang Diajukan (Rp)", min_value=1, value=None, step=1000000, placeholder="Masukkan nominal pinjaman")
