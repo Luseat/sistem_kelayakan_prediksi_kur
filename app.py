@@ -57,7 +57,7 @@ with tab1:
             "Pendapatan / Omset per Bulan (Rp)",
             key="input_omset",
             on_change=format_rupiah,
-            args=("input_omset"),
+            args=("input_omset",),
             placeholder="Masukan omset per bulan" # Ketik angka, misal: 9000000
         )
         
@@ -68,7 +68,7 @@ with tab1:
             "Nominal Pinjaman yang Diajukan (Rp)",
             key="input_pinjaman",
             on_change=format_rupiah,
-            args=("input_pinjaman"),
+            args=("input_pinjaman",),
             placeholder="Masukan nominal pinjaman"
         )
         
