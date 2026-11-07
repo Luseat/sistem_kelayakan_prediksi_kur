@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import time
+from datetime import datetime
 
 st.title("Aplikasi Prediksi Kelayakan Kredit Usaha Rakyat (KUR)")
 st.write("Sistem ini memprediksi gagal bayar calon debitur KUR berdasarkan input data yang diberikan.")
