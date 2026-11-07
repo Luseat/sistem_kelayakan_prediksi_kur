@@ -136,6 +136,9 @@ with tab1:
             
             
             if cicilan_per_bulan > batas_aman_cicilan:
+                status_keputusan = "REJECTED BY SISTEM RULE"
+                alasan_keputusan = f"Sistem menolak otomatis. Rasio cicilan ({rasio_cicilan:.1f}%) melampui batas toleransi risiko kredit perbankan (maksimal 40% dari omset bulanan)."
+                
                 st.error("❌ **TIDAK LAYAK (REJECTED BY SYSTEM RULE)**")
                 st.write(f"Sistem menolak otomatis. Rasio cicilan (**{rasio_cicilan:.1f}%**)melebihi batas toleransi risiko kredit perbankan (**maksimal 40% dari omset**).")
                 
