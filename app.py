@@ -157,13 +157,11 @@ with tab1:
                     teks_opsi_2 = f"- **Opsi 2 (Sesuaikan plafon):** Jika nasabah ingin tetap tenor **{int(tenor_pinjaman)} bulan**, nominal pinjaman maksimal yang disarankan adalah **Rp {int(pinjaman_maks_rekomendasi):,}**."
                     st.markdown(f"{teks_opsi_1}\n{teks_opsi_2}".replace(",", "."))
                     saran_rekomendasi = f"Tawarkan restrukturisasi: perpanjang tenor menjadi minimal {tenor_rekomendasi} bulan atau turunkan plafon pinjaman maksimal Rp.{int(pinjaman_maks_rekomendasi):,}."
-                    
-                    
                 else:
                     st.write(f"Nominal pinjaman yang diajukan (**Rp {int(jumlah_pinjaman):,}**) terlalu jauh melampaui kapasitas omset bulanan nasabah (**Rp {int(omset):,}**).".replace(",", "."))
                     st.markdown(f" - ⚠️ Disarankan nasabah meningkatkan skala omset usaha terlebih dahulu  atau mengajukan  plafon pinjaman mikro yang lebih proposional.")
                     saran_rekomendasi = "Pengajuan pinjaman dinilai terlalu tinggi terhadap omset. Disarankan nasabah meningkatkan skala omset terlebih dahulu."
-                
+
                 
             else:
                 # Mapping inputan UI ke format yang dimengerti model
@@ -179,7 +177,7 @@ with tab1:
                 })
                 
                 
-                #Eksekusi Prediksimodel bakal otomatis nge-scale dan nge-encode input_data ini
+                #Eksekusi Prediksi model bakal otomatis nge-scale dan nge-encode input_data ini
                 prediksi = model.predict(input_data)[0]
                 
                 
