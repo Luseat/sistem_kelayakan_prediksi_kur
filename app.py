@@ -158,6 +158,7 @@ with tab1:
                     st.markdown(f"{teks_opsi_1}\n{teks_opsi_2}".replace(",", "."))
                     saran_rekomendasi = f"Tawarkan restrukturisasi: perpanjang tenor menjadi minimal {tenor_rekomendasi} bulan atau turunkan plafon pinjaman maksimal Rp.{int(pinjaman_maks_rekomendasi):,}."
                     
+                    
                 else:
                     st.write(f"Nominal pinjaman yang diajukan (**Rp {int(jumlah_pinjaman):,}**) terlalu jauh melampaui kapasitas omset bulanan nasabah (**Rp {int(omset):,}**).".replace(",", "."))
                     st.markdown(f" - ⚠️ Disarankan nasabah meningkatkan skala omset usaha terlebih dahulu  atau mengajukan  plafon pinjaman mikro yang lebih proposional.")
