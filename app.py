@@ -182,6 +182,8 @@ with tab1:
                 
                 
                 if prediksi == 0:
+                    status_keputusan = "APPROVED (LAYAK DIBERIKAN)"
+                    
                     st.success("✅ **LAYAK DIBERIKAN (APPROVED)**")
                     st.write("Nasabah ini lolos kriteria finansial dan diprediksi oleh AI memiliki risiko gagal bayar yang rendah.")
                 else:
