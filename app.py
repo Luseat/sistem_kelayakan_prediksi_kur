@@ -190,7 +190,8 @@ with tab1:
                     st.write("Nasabah ini lolos kriteria finansial dan diprediksi oleh AI memiliki risiko gagal bayar yang rendah.")
                 else:
                     status_keputusan = "REJECTED BY AI"
-                    
+                    alasan_keputusan =  "Nasabah belum memenuhi kriteria kapasitas finansial, AI mendeteksi poila historis yang berbotensi tinggi kredit macet."
+                    saran_rekomendasi = "Lakukan survei fisik lapangan ke tempat usaha nasabah, serta chek mutasi rekening 3 bulan terakhir dan pertimbangkan opsi jaminan (agunan) fisik tambahan."
                     
                     st.error("❌ **RISIKO GAGAL BAYAR TINGGI (REJECTED BY AI)**")
                     st.write("Nasabah lolos secara rasio finansial, namun AI mendeteksi pola historis yang berpotensi tinggi mengakibatkan kredit macet.")
