@@ -186,9 +186,12 @@ with tab1:
                     alasan_keputusan = "Nasabah telah memenuhi kriteria kapasitas finansial dan diprediksi oleh AI memiliki risiko gagal bayar yang rendah."
                     saran_rekomendasi = "Pengajuan dinilai aman serta dapat ke tahap verifikasi berkas administrasi dan penandatanganan kontak kredit."
                     
-                    st.success("✅ **LAYAK DIBERIKAN (APPROVED)**")
+                    st.success("✅ **APPROVED (LAYAK DIBERIKAN)**")
                     st.write("Nasabah ini lolos kriteria finansial dan diprediksi oleh AI memiliki risiko gagal bayar yang rendah.")
                 else:
+                    status_keputusan = "REJECTED BY AI"
+                    
+                    
                     st.error("❌ **RISIKO GAGAL BAYAR TINGGI (REJECTED BY AI)**")
                     st.write("Nasabah lolos secara rasio finansial, namun AI mendeteksi pola historis yang berpotensi tinggi mengakibatkan kredit macet.")
                     
