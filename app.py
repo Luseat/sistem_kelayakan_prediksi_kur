@@ -200,6 +200,10 @@ with tab1:
                     st.info(" **Saran Mitigasi Risiko untuk analis kredit:**\n"
                             "- Lakukan verifikasi fisik lapangan terhadap tempat usaha dan chek mutasi rekening 3 bulan terakhir.\n"
                             "- Pertimbangkan opsi penambahan  agunan fisik untuk syarat penjamin (*guarantor*) sebelum mengambil keputusan akhir.")
+                    
+                    
+                    waktu_cetak = datetime.now().strftime("%d-%m-%Y %H:%M:%S WIB")
+                    no_refrensi = f"KUR-{datetime.now().strftime('%Y%m%d%H%M%S')}"
 
 
 with tab2:
@@ -347,4 +351,3 @@ st.markdown(
     "</p>", 
     unsafe_allow_html=True
 )
-            
