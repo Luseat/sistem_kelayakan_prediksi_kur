@@ -209,7 +209,8 @@ with tab1:
            LEMBAR KEPUTUSAN EVALUASI KELAYAKAN KREDIT USAHA RAKYAT (KUR)
                     SISTEM ANALISIS RISIKO KREDIT SEKTOR UMKM
 ================================================================================
-Nomor Referensi  : {no_referensi}"""
+Nomor Referensi  : {no_referensi}
+Tanggal Evaluasi : {waktu_cetak}"""
 
 
 with tab2:
