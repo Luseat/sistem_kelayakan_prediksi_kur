@@ -203,12 +203,13 @@ with tab1:
                     
                     
                     waktu_cetak = datetime.now().strftime("%d-%m-%Y %H:%M:%S WIB")
-                    no_refrensi = f"KUR-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+                    no_referensi = f"KUR-{datetime.now().strftime('%Y%m%d%H%M%S')}"
                     lembar_keputusan = f"""
 ================================================================================
            LEMBAR KEPUTUSAN EVALUASI KELAYAKAN KREDIT USAHA RAKYAT (KUR)
                     SISTEM ANALISIS RISIKO KREDIT SEKTOR UMKM
-================================================================================"""
+================================================================================
+Nomor Referensi  : {no_referensi}"""
 
 
 with tab2:
