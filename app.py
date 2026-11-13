@@ -210,7 +210,8 @@ with tab1:
                     SISTEM ANALISIS RISIKO KREDIT SEKTOR UMKM
 ================================================================================
 Nomor Referensi  : {no_referensi}
-Tanggal Evaluasi : {waktu_cetak}"""
+Tanggal Evaluasi : {waktu_cetak}
+Metode Penilaian : Hybrid (Hard Business Rule & Machine Learning Ensemble)"""
 
 
 with tab2:
