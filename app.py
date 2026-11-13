@@ -211,7 +211,11 @@ with tab1:
 ================================================================================
 Nomor Referensi  : {no_referensi}
 Tanggal Evaluasi : {waktu_cetak}
-Metode Penilaian : Hybrid (Hard Business Rule & Machine Learning Ensemble)"""
+Metode Penilaian : Hybrid (Hard Business Rule & Machine Learning Ensemble)
+
+--------------------------------------------------------------------------------
+A. PROFIL CALON DEBITUR
+--------------------------------------------------------------------------------"""
 
 
 with tab2:
