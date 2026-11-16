@@ -226,7 +226,8 @@ A. PROFIL CALON DEBITUR
 B. KAPASITAS FINANSIAL
 --------------------------------------------------------------------------------
 - Pendapatan / Omset      : Rp. {int(omset):,} /bulan
-"""
+- Plafon Pinjaman Diajukan: Rp. {int(jumlah_pinjaman):,}
+- Jangka Waktu Tenor      : {int(tenor_pinjaman)} Bulan"""
 
 
 with tab2:
