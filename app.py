@@ -225,7 +225,8 @@ A. PROFIL CALON DEBITUR
 --------------------------------------------------------------------------------
 B. KAPASITAS FINANSIAL
 --------------------------------------------------------------------------------
-- Pendapatan / Omset      : Rp {int(omset):,}"""
+- Pendapatan / Omset      : Rp. {int(omset):,} /bulan
+"""
 
 
 with tab2:
