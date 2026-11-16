@@ -216,18 +216,19 @@ Metode Penilaian : Hybrid (Hard Business Rule & Machine Learning Ensemble)
 --------------------------------------------------------------------------------
 A. PROFIL CALON DEBITUR
 --------------------------------------------------------------------------------
-- Usia Calon Debitur      : {int(usia)} Tahun
-- Jenis Kelamin           : {jenis_kelamin}
-- Status Pekerjaan        : {status}
-- Jumlah Anak/Tanggungan  : {int(jumlah_anak)} Anak
-- Riwayat Kredit          : {int(riwayat_telat_bayar)} Telat Bayar
+- Usia Calon Debitur       : {int(usia)} Tahun
+- Jenis Kelamin            : {jenis_kelamin}
+- Status Pekerjaan         : {status}
+- Jumlah Anak/Tanggungan   : {int(jumlah_anak)} Anak
+- Riwayat Kredit           : {int(riwayat_telat_bayar)} Telat Bayar
 
 --------------------------------------------------------------------------------
 B. KAPASITAS FINANSIAL
 --------------------------------------------------------------------------------
-- Pendapatan / Omset      : Rp. {int(omset):,} /bulan
-- Plafon Pinjaman Diajukan: Rp. {int(jumlah_pinjaman):,}
-- Jangka Waktu Tenor      : {int(tenor_pinjaman)} Bulan"""
+- Pendapatan / Omset       : Rp. {int(omset):,} /bulan
+- Plafon Pinjaman Diajukan : Rp. {int(jumlah_pinjaman):,}
+- Jangka Waktu Tenor       : {int(tenor_pinjaman)} Bulan
+- Estimasi Cicilan Bulanan : Rp. {int(cicilan_per_bulan):,}"""
 
 
 with tab2:
