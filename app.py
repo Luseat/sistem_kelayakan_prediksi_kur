@@ -220,7 +220,12 @@ A. PROFIL CALON DEBITUR
 - Jenis Kelamin           : {jenis_kelamin}
 - Status Pekerjaan        : {status}
 - Jumlah Anak/Tanggungan  : {int(jumlah_anak)} Anak
-- Riwayat Kredit          : {int(riwayat_telat_bayar)} Telat Bayar"""
+- Riwayat Kredit          : {int(riwayat_telat_bayar)} Telat Bayar
+
+--------------------------------------------------------------------------------
+B. KAPASITAS FINANSIAL
+--------------------------------------------------------------------------------
+- Pendapatan / Omset      : Rp {int(omset):,}"""
 
 
 with tab2:
