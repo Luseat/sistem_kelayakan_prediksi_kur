@@ -217,7 +217,10 @@ Metode Penilaian : Hybrid (Hard Business Rule & Machine Learning Ensemble)
 A. PROFIL CALON DEBITUR
 --------------------------------------------------------------------------------
 - Usia Calon Debitur      : {int(usia)} Tahun
-- Jenis Kelamin          : {jenis_kelamin}"""
+- Jenis Kelamin           : {jenis_kelamin}
+- Status Pekerjaan        : {status}
+- Jumlah Anak/Tanggungan  : {int(jumlah_anak)} Anak
+- """
 
 
 with tab2:
