@@ -236,7 +236,11 @@ B. KAPASITAS FINANSIAL
 C. HASIL KEPUTUSAN SISTEM
 --------------------------------------------------------------------------------
 STATUS KEPUTUSAN : [{status_keputusan}]
-Dasar Penilaian   : {alasan_keputusan}"""
+Dasar Penilaian   : {alasan_keputusan}
+
+--------------------------------------------------------------------------------
+D. REKOMENDASI & TINDAK LANJUT ANALIS
+--------------------------------------------------------------------------------"""
 
 
 with tab2:
