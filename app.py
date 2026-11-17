@@ -240,7 +240,16 @@ Dasar Penilaian   : {alasan_keputusan}
 
 --------------------------------------------------------------------------------
 D. REKOMENDASI & TINDAK LANJUT ANALIS
---------------------------------------------------------------------------------"""
+--------------------------------------------------------------------------------
+{saran_rekomendasi}
+
+================================================================================
+Catatan: Dokumen ini diterbitkan oleh Sistem Analisis Risiko Kredit UMKM 
+         dan bersifat sebagai referensi awal bagi analis kredit. 
+         Keputusan akhir tetap berada di tangan analis kredit dan manajemen bank.
+         Dapat dicetak ke PDF sebagai opsional bisa dilampirkan ke berkas kredit nasabah.
+================================================================================
+""".replace(",", ".")
 
 
 with tab2:
