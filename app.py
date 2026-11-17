@@ -230,7 +230,11 @@ B. KAPASITAS FINANSIAL
 - Jangka Waktu Tenor       : {int(tenor_pinjaman)} Bulan
 - Estimasi Cicilan Bulanan : Rp. {int(cicilan_per_bulan):,} /bulan
 - Rasion Cicilan (DSR)      : {rasio_cicilan:.1f}% (Batas aman maksimal: 40.0%)
-- Sisa Omset Bersih         : Rp. {int(sisa_omset):,} ({'SURPLUS' if sisa_omset > 0 else 'DEFISIT'})"""
+- Sisa Omset Bersih         : Rp. {int(sisa_omset):,} ({'SURPLUS' if sisa_omset > 0 else 'DEFISIT'})
+
+--------------------------------------------------------------------------------
+C. HASIL KEPUTUSAN SISTEM
+--------------------------------------------------------------------------------"""
 
 
 with tab2:
