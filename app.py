@@ -235,7 +235,8 @@ B. KAPASITAS FINANSIAL
 --------------------------------------------------------------------------------
 C. HASIL KEPUTUSAN SISTEM
 --------------------------------------------------------------------------------
-STATUS KEPUTUSAN : [{status_keputusan}]"""
+STATUS KEPUTUSAN : [{status_keputusan}]
+Dasar Penilaian   : {alasan_keputusan}"""
 
 
 with tab2:
