@@ -225,10 +225,11 @@ A. PROFIL CALON DEBITUR
 --------------------------------------------------------------------------------
 B. KAPASITAS FINANSIAL
 --------------------------------------------------------------------------------
-- Pendapatan / Omset       : Rp. {int(omset):,} /bulan
+- Pendapatan/Omset       : Rp. {int(omset):,} /bulan
 - Plafon Pinjaman Diajukan : Rp. {int(jumlah_pinjaman):,}
 - Jangka Waktu Tenor       : {int(tenor_pinjaman)} Bulan
-- Estimasi Cicilan Bulanan : Rp. {int(cicilan_per_bulan):,}"""
+- Estimasi Cicilan Bulanan : Rp. {int(cicilan_per_bulan):,} /bulan
+- Rasion Cicilan (DSR)      : {rasio_cicilan:.1f}% (Batas aman maksimal: 40.0%)"""
 
 
 with tab2:
