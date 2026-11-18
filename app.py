@@ -251,6 +251,14 @@ Catatan: Dokumen ini diterbitkan oleh Sistem Analisis Risiko Kredit UMKM
 ================================================================================
 """.replace(",", ".")
 
+            st.markdown("---")
+            st.download_button(
+                label="⬇️ Download Lembar Keputusan Evaluasi",
+                data=lembar_keputusan.encode('utf-8'),
+                file_name=f"Lembar_Keputusan_{no_referensi}.txt",
+                mime="text/plain"
+            )
+
 
 with tab2:
     st.header("Evaluasi kelayakan kredit massal via file csv")
