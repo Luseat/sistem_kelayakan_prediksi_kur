@@ -54,7 +54,12 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
     pdf.set_font("Helvetica", 'B', 13)
     pdf.cell(190,7, "SURAT KEPUTUSAN EVALUASI KREDIT USAHA RAKYAT (KUR)", align='C')
     pdf.ln(6)
-    
+    pdf.set_font("Helvetica", 'I', 9)
+    pdf.cell(190, 5, "Sistem Analisis Risiko Kredit UMKM", align='C')
+    pdf.ln(6)
+    pdf.set_line_width(0.5)
+    pdf.line(10, pdf.get_y(), 200, pdf.get_y())
+    pdf.line(5)
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
