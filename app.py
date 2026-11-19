@@ -47,6 +47,9 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
                            alasan_keputusan, saran_rekomendasi
                            ):
     from fpdf import FPDF
+    pdf = FPDF(orientation='P', unit='mm', format='A4')
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
