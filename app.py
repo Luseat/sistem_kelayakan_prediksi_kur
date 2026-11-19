@@ -50,6 +50,11 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
+    
+    pdf.set_font("Helvetica", 'B', 13)
+    pdf.cell(190,7, "SURAT KEPUTUSAN EVALUASI KREDIT USAHA RAKYAT (KUR)", align='C')
+    pdf.ln(6)
+    
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
