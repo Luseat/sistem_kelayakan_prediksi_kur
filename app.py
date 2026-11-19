@@ -41,6 +41,14 @@ def format_rupiah(key):
         st.session_state[key] = ""
 
 
+def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, status, jumlah_anak,
+                           riwayat_telat_bayar, omset, jumlah_pinjaman, tenor_pinjaman,
+                           cicilan_per_bulan, rasion_cicilan, sisa_omset, status_keputusan,
+                           alasan_keputusan, saran_rekomendasi
+                           ):
+    from fpdf import FPDF
+
+
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
 
 with tab1:
@@ -202,9 +210,9 @@ with tab1:
                             "- Pertimbangkan opsi penambahan  agunan fisik untuk syarat penjamin (*guarantor*) sebelum mengambil keputusan akhir.")
                     
                     
-                    waktu_cetak = datetime.now().strftime("%d-%m-%Y %H:%M:%S WIB")
-                    no_referensi = f"KUR-{datetime.now().strftime('%Y%m%d%H%M%S')}"
-                    lembar_keputusan = f"""
+            waktu_cetak = datetime.now().strftime("%d-%m-%Y %H:%M:%S WIB")
+            no_referensi = f"KUR-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            lembar_keputusan = f"""
 ================================================================================
            LEMBAR KEPUTUSAN EVALUASI KELAYAKAN KREDIT USAHA RAKYAT (KUR)
                     SISTEM ANALISIS RISIKO KREDIT SEKTOR UMKM
@@ -220,7 +228,7 @@ A. PROFIL CALON DEBITUR
 - Jenis Kelamin            : {jenis_kelamin}
 - Status Pekerjaan         : {status}
 - Jumlah Anak/Tanggungan   : {int(jumlah_anak)} Anak
-- Riwayat Kredit           : {int(riwayat_telat_bayar)} Telat Bayar
+- Riwayat Kredit           : {riwayat_telat_bayar} Telat Bayar
 
 --------------------------------------------------------------------------------
 B. KAPASITAS FINANSIAL
@@ -377,7 +385,7 @@ with tab2:
                     c2.metric("Total Layak (APPROVED)", f"{total_approved} Nasabah", delta="Disetujui")
                     c3.metric("Total Tolak (REJECTED)", f"{total_rejected} Nasabah", delta="Ditolak", delta_color="inverse")
                     
-                    st.subheader(" Tabel Hasil Keputusan Lengkap:") #📄 Tabel Hasil Keputusan Lengkap:
+                    st.subheader(" Tabel Hasil Keputusan Lengkap:")
                     st.dataframe(df_hasil[[
                         'omset', 'jumlah_pinjaman', 'tenor_pinjaman_(bulan)',
                         'cicilan_per_bulan', 'rasio_cicilan_%',
