@@ -71,7 +71,8 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
     pdf.cell(190, 6, " A. PROFIL CALON DEBITUR", fill=True)
     pdf.ln(7)
     
-    #pdf.set_font("Helvetica", "", 9)
+    pdf.set_font("Helvetica", "", 9)
+    profil = []
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
