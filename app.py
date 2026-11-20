@@ -65,6 +65,11 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
     pdf.cell(95, 5, f"Nomor Dokumen: {no_referensi}")
     pdf.cell(95, 5, f"Waktu Evaluasi: {waktu_cetak}", align='R')
     pdf.ln(7)
+    
+    pdf.set_font("Helvetica", 'B', 9)
+    pdf.set_fill_color(240, 240, 240)
+    pdf.cell(190, 6, "A. PROFIL CALON DEBITUR", fill=True)
+    pdf.ln(7)
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
