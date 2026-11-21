@@ -86,6 +86,10 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
         pdf.ln(5)
     pdf.ln(3)
     
+    pdf.set_font("Helvetica", "B", 10)
+    pdf.cell(190, 6, " B. KAPASITAS FINANSIAL", fill=True)
+    pdf.ln(7)
+    pdf.set_font("Helvetica", "", 9)
     finansial = [
         ("Pendapatan / Omset per Bulan", f"Rp {int(omset):,}".replace(",", ".")),
         ("Plafon Pinjaman ynag Diajukan", f"Rp {int(jumlah_pinjaman):,}".replace(",", ".")),
