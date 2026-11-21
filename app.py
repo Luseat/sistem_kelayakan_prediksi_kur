@@ -79,6 +79,12 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
         ("Jumlah Tanggungan / Anak", f"{int(jumlah_anak)} Orang"),
         ("Riwayat KreditSebelumnya", f"{riwayat_telat_bayar} Telat Bayar")
     ]
+    for label, val in profil:
+        pdf.cell(60, 5, f"- {label}")
+        pdf.cell(5, 5, ":")
+        pdf.cell(125, 5, str(val))
+        pdf.ln(5)
+    pdf.ln(3)
     
     finansial = [
         ("Pendapatan / Omset per Bulan", f"Rp {int(omset):,}".replace(",", ".")),
