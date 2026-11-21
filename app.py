@@ -72,7 +72,11 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
     pdf.ln(7)
     
     pdf.set_font("Helvetica", "", 9)
-    profil = []
+    profil = [
+        ("Pendapatan / Omset per Bulan", f"Rp {int(omset):,}".replace(",", ".")),
+        ("Plafon Pinjaman ynag Diajukan", f"Rp {int(jumlah_pinjaman):,}".replace(",", ".")),
+        ("Jangka Waktu Pinjaman (Tenor)", f"{int(tenor_pinjaman)} Bulan"),
+    ]
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
