@@ -73,9 +73,17 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
     
     pdf.set_font("Helvetica", "", 9)
     profil = [
+        ("Usia Calon Debitur", f"{int(usia)} Tahun"),
+        ("Jenis Kelamin", jenis_kelamin),
+        ("Status Pekerjaan", status),
+        ("Jumlah Tanggungan / Anak", f"{int(jumlah_anak)} Anak"),
+    ]
+    
+    finansial = [
         ("Pendapatan / Omset per Bulan", f"Rp {int(omset):,}".replace(",", ".")),
         ("Plafon Pinjaman ynag Diajukan", f"Rp {int(jumlah_pinjaman):,}".replace(",", ".")),
         ("Jangka Waktu Pinjaman (Tenor)", f"{int(tenor_pinjaman)} Bulan"),
+        
     ]
 
 
