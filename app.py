@@ -76,7 +76,8 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
         ("Usia Calon Debitur", f"{int(usia)} Tahun"),
         ("Jenis Kelamin", jenis_kelamin),
         ("Status Pekerjaan", status),
-        ("Jumlah Tanggungan / Anak", f"{int(jumlah_anak)} Anak"),
+        ("Jumlah Tanggungan / Anak", f"{int(jumlah_anak)} Orang"),
+        ("Riwayat KreditSebelumnya", f"{riwayat_telat_bayar} Telat Bayar")
     ]
     
     finansial = [
