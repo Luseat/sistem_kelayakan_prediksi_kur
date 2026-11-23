@@ -104,6 +104,10 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
         pdf.cell(125, 5, str(val))
         pdf.ln(5)
     pdf.ln(3)
+    
+    pdf.set_font("Helvetica", "B", 10)
+    pdf.cell(190, 6, " C. KEPUTUSAN KELAYAKAN SISTEM", fill=True)
+    pdf.ln(7)
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
