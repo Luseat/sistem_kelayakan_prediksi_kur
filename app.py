@@ -98,6 +98,12 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
         ("Debt Service Ratio (DSR)", f"{rasio_cicilan:.1f}% (Batas aman maksimal: 40.0%)"),
         ("Sisa Omset Bersih", f"Rp {int(sisa_omset):,} ({'SURPLUS' if sisa_omset > 0 else 'DEFISIT'})".replace(",", "."))
     ]
+    for label, val in finansial:
+        pdf.cell(60, 5, f"- {label}")
+        pdf.cell(5, 5, ":")
+        pdf.cell(125, 5, str(val))
+        pdf.ln(5)
+    pdf.ln(3)
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
