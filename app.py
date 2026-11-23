@@ -77,7 +77,7 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
         ("Jenis Kelamin", jenis_kelamin),
         ("Status Pekerjaan", status),
         ("Jumlah Tanggungan / Anak", f"{int(jumlah_anak)} Orang"),
-        ("Riwayat KreditSebelumnya", f"{riwayat_telat_bayar} Telat Bayar")
+        ("Riwayat Kredit Sebelumnya", f"{riwayat_telat_bayar} Telat Bayar")
     ]
     for label, val in profil:
         pdf.cell(60, 5, f"- {label}")
@@ -92,9 +92,11 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
     pdf.set_font("Helvetica", "", 9)
     finansial = [
         ("Pendapatan / Omset per Bulan", f"Rp {int(omset):,}".replace(",", ".")),
-        ("Plafon Pinjaman ynag Diajukan", f"Rp {int(jumlah_pinjaman):,}".replace(",", ".")),
+        ("Plafon Pinjaman yang Diajukan", f"Rp {int(jumlah_pinjaman):,}".replace(",", ".")),
         ("Jangka Waktu Pinjaman (Tenor)", f"{int(tenor_pinjaman)} Bulan"),
-        
+        ("Estimasi Cicilan per Bulan", f"Rp {int(cicilan_per_bulan):,}".replace(",", ".")),
+        ("Debt Service Ratio (DSR)", f"{rasio_cicilan:.1f}% (Batas aman maksimal: 40.0%)"),
+        ("Sisa Omset Bersih", f"Rp {int(sisa_omset):,} ({'SURPLUS' if sisa_omset > 0 else 'DEFISIT'})".replace(",", "."))
     ]
 
 
