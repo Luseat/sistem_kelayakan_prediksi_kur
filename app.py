@@ -117,7 +117,8 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
         pdf.set_text_color(180, 0, 0) # Merah
         pdf.set_fill_color(255, 235, 235)
         
-    
+    pdf.cell(190, 6, f"STATUS : {status_keputusan}", border=1, fill=True, align="C")
+    pdf.ln(9)
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
