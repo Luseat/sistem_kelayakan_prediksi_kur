@@ -135,6 +135,16 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
     pdf.set_font("Helvetica", "", 9)
     pdf.multi_cell(190, 5, saran_rekomendasi)
     pdf.ln(8)
+    
+    pdf.set_font("Helvetica", "", 9)
+    pdf.cell(95, 5, "Dinanalis oleh,", align='C')
+    pdf.cell(95, 5, "Mengetahui,", align='C')
+    pdf.ln(18) # ruang tanda tangan
+    pdf.set_font("Helvetica", "B", 9)
+    pdf.cell(95, 5, "( Staf Analisis Kredit )", align='C')
+    pdf.cell(95, 5, "( Kepala Cabang )", align='C')
+    
+    return bytes(pdf.output())
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
