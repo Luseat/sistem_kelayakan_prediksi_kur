@@ -108,6 +108,16 @@ def generate_pdf_keputusan(no_referensi, waktu_cetak, usia, jenis_kelamin, statu
     pdf.set_font("Helvetica", "B", 10)
     pdf.cell(190, 6, " C. KEPUTUSAN KELAYAKAN SISTEM", fill=True)
     pdf.ln(7)
+    
+    pdf.set_font("Helvetica", "B", 11)
+    if "APPROVED" in status_keputusan:
+        pdf.set_text_color(0, 100, 0) # Hijau
+        pdf.set_fill_color(230, 245, 230)
+    else:
+        pdf.set_text_color(180, 0, 0) # Merah
+        pdf.set_fill_color(255, 235, 235)
+        
+    
 
 
 tab1, tab2 = st.tabs(["Evaluasi Individu", "Evaluasi Massal (Upload CSV)"])
