@@ -310,59 +310,15 @@ with tab1:
                     
             waktu_cetak = datetime.now().strftime("%d-%m-%Y %H:%M:%S WIB")
             no_referensi = f"KUR-{datetime.now().strftime('%Y%m%d%H%M%S')}"
-            lembar_keputusan = f"""
-================================================================================
-           LEMBAR KEPUTUSAN EVALUASI KELAYAKAN KREDIT USAHA RAKYAT (KUR)
-                    SISTEM ANALISIS RISIKO KREDIT SEKTOR UMKM
-================================================================================
-Nomor Referensi  : {no_referensi}
-Tanggal Evaluasi : {waktu_cetak}
-Metode Penilaian : Hybrid (Hard Business Rule & Machine Learning Ensemble)
-
---------------------------------------------------------------------------------
-A. PROFIL CALON DEBITUR
---------------------------------------------------------------------------------
-- Usia Calon Debitur       : {int(usia)} Tahun
-- Jenis Kelamin            : {jenis_kelamin}
-- Status Pekerjaan         : {status}
-- Jumlah Anak/Tanggungan   : {int(jumlah_anak)} Anak
-- Riwayat Kredit           : {riwayat_telat_bayar} Telat Bayar
-
---------------------------------------------------------------------------------
-B. KAPASITAS FINANSIAL
---------------------------------------------------------------------------------
-- Pendapatan/Omset       : Rp. {int(omset):,} /bulan
-- Plafon Pinjaman Diajukan : Rp. {int(jumlah_pinjaman):,}
-- Jangka Waktu Tenor       : {int(tenor_pinjaman)} Bulan
-- Estimasi Cicilan Bulanan : Rp. {int(cicilan_per_bulan):,} /bulan
-- Rasion Cicilan (DSR)      : {rasio_cicilan:.1f}% (Batas aman maksimal: 40.0%)
-- Sisa Omset Bersih         : Rp. {int(sisa_omset):,} ({'SURPLUS' if sisa_omset > 0 else 'DEFISIT'})
-
---------------------------------------------------------------------------------
-C. HASIL KEPUTUSAN SISTEM
---------------------------------------------------------------------------------
-STATUS KEPUTUSAN : [{status_keputusan}]
-Dasar Penilaian   : {alasan_keputusan}
-
---------------------------------------------------------------------------------
-D. REKOMENDASI & TINDAK LANJUT ANALIS
---------------------------------------------------------------------------------
-{saran_rekomendasi}
-
-================================================================================
-Catatan: Dokumen ini diterbitkan oleh Sistem Analisis Risiko Kredit UMKM 
-         dan bersifat sebagai referensi awal bagi analis kredit. 
-         Keputusan akhir tetap berada di tangan analis kredit dan manajemen bank.
-         Dapat dicetak ke PDF sebagai opsional bisa dilampirkan ke berkas kredit nasabah.
-================================================================================
-""".replace(",", ".")
+            
+            pdf_bytes = generate_pdf_keputusan()
 
             st.markdown("---")
             st.download_button(
                 label="⬇️ Download Lembar Keputusan Evaluasi",
-                data=lembar_keputusan.encode('utf-8'),
-                file_name=f"Lembar_Keputusan_{no_referensi}.txt",
-                mime="text/plain"
+                data=pdf_bytes,
+                file_name=f"Lembar_Keputusan_{no_referensi}.pdf",
+                mime="application/pdf"
             )
 
 
